@@ -1,0 +1,40 @@
+/* Import Tailwind's base styles, components, and utilities */
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* Additional global custom styles can be placed here */
+
+/* Example of custom variables */
+:root {
+  --background: 0 0% 100%;  /* Background color */
+  --foreground: 224 71% 4%; /* Text color */
+  --primary: 262 83% 58%;   /* Primary color */
+  --secondary: 220 14% 96%; /* Secondary color */
+  --muted: 220 14% 96%;     /* Muted background color */
+  --border: 220 13% 91%;    /* Border color */
+  --radius: 0.5rem;         /* Border radius */
+}
+
+/* Apply background and foreground globally */
+body {
+  @apply bg-background text-foreground;
+}
+
+/* Universal styles */
+* {
+  @apply box-border;
+  margin: 0;
+  padding: 0;
+}
+
+/* Global styles for anchor tags */
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+/* Example of custom class for rounded corners */
+.rounded-card {
+  @apply rounded-lg;
+}
