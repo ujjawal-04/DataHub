@@ -8,7 +8,7 @@ import DFSVisualizer from '../../components/graph/DFSVisualizer'
 import DijkstraVisualizer from '../../components/graph/DijkstraVisualizer'
 import BellmanFordVisualizer from '../../components/graph/BellmanFordVisualizer'
 import PrimsVisualizer from '../../components/graph/PrimsVisualizer'
-import KruskalsVisualizer from '../../components/graph/KruskalsVisualizer'
+import KruskalsVisualizer from '../../components/graph/KruskalVisualizer'
 
 const graphAlgorithms = [
   { name: 'Breadth-First Search (BFS)', component: BFSVisualizer },

@@ -6,15 +6,11 @@ import { ArrowRight } from 'lucide-react'
 import LinearSearchVisualizer from '../../components/searching/LinearSearchVisualizer'
 import BinarySearchVisualizer from '../../components/searching/BinarySearchVisualizer'
 import JumpSearchVisualizer from '../../components/searching/JumpSearchVisualizer'
-import InterpolationSearchVisualizer from '../../components/searching/InterpolationSearchVisualizer'
-import ExponentialSearchVisualizer from '../../components/searching/ExponentialSearchVisualizer'
 
 const searchingAlgorithms = [
   { name: 'Linear Search', component: LinearSearchVisualizer },
   { name: 'Binary Search', component: BinarySearchVisualizer },
   { name: 'Jump Search', component: JumpSearchVisualizer },
-  { name: 'Interpolation Search', component: InterpolationSearchVisualizer },
-  { name: 'Exponential Search', component: ExponentialSearchVisualizer },
 ]
 
 export default function SearchingPage() {
