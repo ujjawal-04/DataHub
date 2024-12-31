@@ -1,7 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
-import { motion } from 'framer-motion'
+import { useState} from 'react'
 
 interface Node {
   id: string
@@ -14,7 +13,7 @@ interface Edge {
   target: string
 }
 
-export default function BFSVisualizer() {
+export default function PrimeVisualizer() {
   const [nodes, setNodes] = useState<Node[]>([])
   const [edges, setEdges] = useState<Edge[]>([])
   const [visitedNodes, setVisitedNodes] = useState<string[]>([])

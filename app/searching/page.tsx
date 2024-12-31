@@ -2,41 +2,95 @@
 
 import { useState } from 'react'
 import Link from 'next/link'
-import { ArrowRight } from 'lucide-react'
+import { motion, AnimatePresence } from 'framer-motion'
+import { ArrowRight, ChevronDown } from 'lucide-react'
 import LinearSearchVisualizer from '../../components/searching/LinearSearchVisualizer'
 import BinarySearchVisualizer from '../../components/searching/BinarySearchVisualizer'
-import JumpSearchVisualizer from '../../components/searching/JumpSearchVisualizer'
 
 const searchingAlgorithms = [
   { name: 'Linear Search', component: LinearSearchVisualizer },
   { name: 'Binary Search', component: BinarySearchVisualizer },
-  { name: 'Jump Search', component: JumpSearchVisualizer },
 ]
 
 export default function SearchingPage() {
   const [selectedAlgo, setSelectedAlgo] = useState(searchingAlgorithms[0])
+  const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <div className="container mx-auto px-4 py-8">
-      <h1 className="text-3xl font-bold mb-6 text-foreground">Searching Algorithms</h1>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-        <div className="col-span-1">
-          {searchingAlgorithms.map((algo, index) => (
-            <button
-              key={index}
-              className={`w-full text-left p-4 rounded-lg mb-2 ${
-                selectedAlgo.name === algo.name ? 'bg-primary text-primary-foreground' : 'bg-card text-card-foreground'
-              }`}
-              onClick={() => setSelectedAlgo(algo)}
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 ml-10 mr-10">
+      <div className="container mx-auto px-4 py-12">
+        <motion.h1 
+          className="text-3xl md:text-4xl font-bold mb-8 text-blue-800 text-center"
+          initial={{ opacity: 0, y: -20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.5 }}
+        >
+          Searching Algorithms
+        </motion.h1>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="col-span-1">
+            <div className="md:hidden mb-4">
+              <button
+                className="w-full bg-blue-600 text-white p-4 rounded-lg flex justify-between items-center"
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                <span>{selectedAlgo.name}</span>
+                <ChevronDown className={`transform transition-transform ${isMenuOpen ? 'rotate-180' : ''}`} />
+              </button>
+            </div>
+            <motion.div
+              className={`md:block ${isMenuOpen ? 'block' : 'hidden'}`}
+              initial={{ opacity: 0, height: 0 }}
+              animate={{ opacity: 1, height: 'auto' }}
+              transition={{ duration: 0.3 }}
             >
-              {algo.name}
-            </button>
-          ))}
+              {searchingAlgorithms.map((algo, index) => (
+                <motion.button
+                  key={index}
+                  className={`w-full text-left p-4 rounded-lg mb-2 transition-colors ${
+                    selectedAlgo.name === algo.name 
+                      ? 'bg-blue-600 text-white' 
+                      : 'bg-white text-blue-800 hover:bg-blue-100'
+                  }`}
+                  onClick={() => {
+                    setSelectedAlgo(algo)
+                    setIsMenuOpen(false)
+                  }}
+                  whileHover={{ scale: 1.05 }}
+                  whileTap={{ scale: 0.95 }}
+                >
+                  {algo.name}
+                </motion.button>
+              ))}
+            </motion.div>
+          </div>
+          <motion.div 
+            className="col-span-2 bg-white p-6 rounded-lg shadow-lg"
+            initial={{ opacity: 0, x: 20 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 0.5 }}
+          >
+            <h2 className="text-2xl font-semibold mb-4 text-blue-800">{selectedAlgo.name}</h2>
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={selectedAlgo.name}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                exit={{ opacity: 0, y: -20 }}
+                transition={{ duration: 0.3 }}
+              >
+                {selectedAlgo.component && <selectedAlgo.component />}
+              </motion.div>
+            </AnimatePresence>
+          </motion.div>
         </div>
-        <div className="col-span-2">
-          <h2 className="text-2xl font-semibold mb-4">{selectedAlgo.name}</h2>
-          {selectedAlgo.component && <selectedAlgo.component />}
-        </div>
+        <motion.div 
+          className="mt-12 text-center"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ delay: 0.5, duration: 0.5 }}
+        >
+        </motion.div>
       </div>
     </div>
   )

@@ -43,97 +43,165 @@ const features = [
   }
 ]
 
+const fadeInUp = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0 },
+  transition: { duration: 0.5 }
+}
+
 export default function Home() {
   return (
-    <div className="bg-white">
-      <section className="py-20 px-4">
+    <div className="bg-white text-gray-900">
+      <motion.section 
+        className="py-24 px-4 bg-gradient-to-r from-blue-50 to-indigo-50"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5 }}
+      >
         <div className="max-w-7xl mx-auto text-center">
           <motion.h1 
-            className="text-4xl md:text-6xl font-bold mb-6 text-[#1D3354]"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5 }}
+            className="text-5xl md:text-7xl font-extrabold mb-6 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600"
+            {...fadeInUp}
           >
-            Welcome to <span className="text-[#D64045]">AlgoViz Pro</span>
+            Welcome to DataHub
           </motion.h1>
           <motion.p 
-            className="text-xl mb-8 text-[#467599]"
-            initial={{ opacity: 0, y: -20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.5, delay: 0.2 }}
+            className="text-xl md:text-2xl mb-10 text-gray-700"
+            {...fadeInUp}
+            transition={{ delay: 0.2, ...fadeInUp.transition }}
           >
             Explore algorithms and data structures through interactive visualizations
           </motion.p>
-          <Link href="/get-started">
-            <motion.button 
-              className="bg-[#D64045] text-white px-6 py-3 rounded-md hover:bg-[#D64045]/90 transition-colors inline-flex items-center"
-              initial={{ opacity: 0, y: -20 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, delay: 0.4 }}
-            >
-              Get Started
-              <ArrowRight className="ml-2" />
-            </motion.button>
-          </Link>
+          <motion.div
+            {...fadeInUp}
+            transition={{ delay: 0.4, ...fadeInUp.transition }}
+          >
+            <Link href="/get-started">
+              <motion.button 
+                className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-blue-600 hover:to-indigo-600 transition-colors inline-flex items-center shadow-lg"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Get Started
+                <ArrowRight className="ml-2" />
+              </motion.button>
+            </Link>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="py-20 px-4 bg-[#E9FFF9]">
+      <motion.section 
+        className="py-24 px-4 bg-white"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.2 }}
+      >
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center text-[#1D3354]">Why Choose AlgoViz Pro?</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-[#1D3354]">Interactive Learning</h3>
-              <p className="text-[#467599]">Engage with algorithms and data structures through hands-on visualizations.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-[#1D3354]">Comprehensive Coverage</h3>
-              <p className="text-[#467599]">Explore a wide range of topics from basic to advanced concepts.</p>
-            </div>
-            <div className="bg-white p-6 rounded-lg shadow-md">
-              <h3 className="text-xl font-semibold mb-4 text-[#1D3354]">Step-by-Step Explanations</h3>
-              <p className="text-[#467599]">Understand complex algorithms with detailed, step-by-step breakdowns.</p>
-            </div>
+          <motion.h2 
+            className="text-4xl font-bold mb-16 text-center text-gray-900"
+            {...fadeInUp}
+          >
+            Why Choose DataHub?
+          </motion.h2>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+            {[
+              { title: 'Interactive Learning', description: 'Engage with algorithms and data structures through hands-on visualizations.', icon: '🎨' },
+              { title: 'Comprehensive Coverage', description: 'Explore a wide range of topics from basic to advanced concepts.', icon: '📚' },
+              { title: 'Step-by-Step Explanations', description: 'Understand complex algorithms with detailed, step-by-step breakdowns.', icon: '🔍' }
+            ].map((item, index) => (
+              <motion.div 
+                key={item.title}
+                className="bg-gradient-to-br from-blue-50 to-indigo-50 p-8 rounded-2xl shadow-lg"
+                {...fadeInUp}
+                transition={{ delay: 0.1 * index, ...fadeInUp.transition }}
+              >
+                <div className="text-4xl mb-4">{item.icon}</div>
+                <h3 className="text-2xl font-semibold mb-4 text-gray-900">{item.title}</h3>
+                <p className="text-gray-700">{item.description}</p>
+              </motion.div>
+            ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="py-20 px-4 bg-white">
+      <motion.section 
+        className="py-24 px-4 bg-gray-50"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.4 }}
+      >
         <div className="max-w-7xl mx-auto">
-          <h2 className="text-3xl font-bold mb-12 text-center text-[#1D3354]">Explore Our Topics</h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <motion.h2 
+            className="text-4xl font-bold mb-16 text-center text-gray-900"
+            {...fadeInUp}
+          >
+            Explore Our Topics
+          </motion.h2>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-10">
             {features.map((feature, index) => (
               <motion.div 
                 key={index}
-                className="bg-[#9ED8DB] p-6 rounded-lg shadow-md"
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-shadow"
+                {...fadeInUp}
+                transition={{ delay: 0.1 * index, ...fadeInUp.transition }}
               >
-                <feature.icon className="w-12 h-12 text-[#D64045] mb-4" />
-                <h3 className="text-xl font-semibold mb-2 text-[#1D3354]">{feature.title}</h3>
-                <p className="text-[#467599] mb-4">{feature.description}</p>
-                <Link href={feature.link} className="text-[#D64045] flex items-center">
-                  Explore <ArrowRight className="ml-2" />
+                <feature.icon className="w-16 h-16 text-blue-500 mb-6" />
+                <h3 className="text-2xl font-semibold mb-4 text-gray-900">{feature.title}</h3>
+                <p className="text-gray-700 mb-6">{feature.description}</p>
+                <Link href={feature.link} className="text-blue-600 font-semibold flex items-center group hover:text-indigo-600 transition-colors">
+                  Explore 
+                  <motion.span
+                    className="ml-2"
+                    initial={{ x: 0 }}
+                    whileHover={{ x: 5 }}
+                    transition={{ duration: 0.2 }}
+                  >
+                    <ArrowRight />
+                  </motion.span>
                 </Link>
               </motion.div>
             ))}
           </div>
         </div>
-      </section>
+      </motion.section>
 
-      <section className="py-20 px-4 bg-[#E9FFF9]">
+      <motion.section 
+        className="py-24 px-4 bg-gradient-to-r from-blue-100 to-indigo-100"
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        transition={{ duration: 0.5, delay: 0.6 }}
+      >
         <div className="max-w-7xl mx-auto text-center">
-          <h2 className="text-3xl font-bold mb-8 text-[#1D3354]">Ready to Master Algorithms?</h2>
-          <p className="text-xl mb-8 text-[#467599]">
-            Join thousands of students and professionals who have accelerated their learning with AlgoViz Pro.
-          </p>
-          <Link href="/about" className="bg-[#D64045] text-white px-6 py-3 rounded-md hover:bg-[#D64045]/90 transition-colors inline-flex items-center">
-            Learn More About Us
-            <ArrowRight className="ml-2" />
-          </Link>
+          <motion.h2 
+            className="text-4xl font-bold mb-8 text-gray-900"
+            {...fadeInUp}
+          >
+            Ready to Master Algorithms?
+          </motion.h2>
+          <motion.p 
+            className="text-xl mb-10 text-gray-700"
+            {...fadeInUp}
+            transition={{ delay: 0.2, ...fadeInUp.transition }}
+          >
+            Join thousands of students and professionals who have accelerated their learning with DataHub.
+          </motion.p>
+          <motion.div
+            {...fadeInUp}
+            transition={{ delay: 0.4, ...fadeInUp.transition }}
+          >
+            <Link href="/about">
+              <motion.button
+                className="bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-8 py-4 rounded-full text-lg font-semibold hover:from-blue-600 hover:to-indigo-600 transition-colors inline-flex items-center shadow-lg"
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                Learn More About Us
+                <ArrowRight className="ml-2" />
+              </motion.button>
+            </Link>
+          </motion.div>
         </div>
-      </section>
+      </motion.section>
     </div>
   )
 }

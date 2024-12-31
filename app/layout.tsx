@@ -6,8 +6,8 @@ import Footer from '../components/Footer'
 const inter = Inter({ subsets: ['latin'] })
 
 export const metadata = {
-  title: 'AlgoViz Pro - Interactive Algorithm Visualizations',
-  description: 'Explore and learn algorithms through interactive visualizations.',
+  title: 'DataHub - Interactive Data Visualizations',
+  description: 'Explore and learn data structure through interactive visualizations.',
 }
 
 export default function RootLayout({
