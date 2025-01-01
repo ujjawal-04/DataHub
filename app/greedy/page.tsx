@@ -4,12 +4,14 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
+import activityselection from '@/components/greedy/activityselection'
+import fractionalknapsack from '@/components/greedy/fractionalknapsack'
+import huffmancoding from '@/components/greedy/huffmancoding'
 
 const greedyAlgorithms = [
-  { name: 'Activity Selection', link: '/greedy/activity-selection' },
-  { name: 'Fractional Knapsack', link: '/greedy/fractional-knapsack' },
-  { name: 'Huffman Coding', link: '/greedy/huffman-coding' },
-  { name: 'Job Sequencing', link: '/greedy/job-sequencing' },
+  { name: 'Activity Selection', component: activityselection },
+  { name: 'Fractional Knapsack', component: fractionalknapsack },
+  { name: 'Huffman Coding', component: huffmancoding },
 ]
 
 export default function GreedyPage() {
@@ -46,7 +48,11 @@ export default function GreedyPage() {
             >
               <h3 className="text-xl font-semibold mb-4">{algo.name}</h3>
               <Link 
-                href={algo.link} 
+                href={{
+                  pathname: '/greedy/[algorithm]',
+                  query: { algorithm: algo.name.toLowerCase().replace(' ', '-') },
+                }}
+                as={`/greedy/${algo.name.toLowerCase().replace(' ', '-')}`}
                 className="text-blue-600 hover:text-blue-800 flex items-center transition-colors duration-300"
               >
                 Explore 

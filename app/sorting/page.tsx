@@ -9,7 +9,6 @@ import SelectionSortVisualizer from '../../components/sorting/SelectionSortVisua
 import InsertionSortVisualizer from '../../components/sorting/InsertionSortVisualizer'
 import MergeSortVisualizer from '../../components/sorting/MergeSortVisualizer'
 import QuickSortVisualizer from '../../components/sorting/QuickSortVisualizer'
-import HeapSortVisualizer from '../../components/sorting/HeapSortVisualizer'
 
 const sortingAlgorithms = [
   { name: 'Bubble Sort', component: BubbleSortVisualizer },
@@ -17,7 +16,6 @@ const sortingAlgorithms = [
   { name: 'Insertion Sort', component: InsertionSortVisualizer },
   { name: 'Merge Sort', component: MergeSortVisualizer },
   { name: 'Quick Sort', component: QuickSortVisualizer },
-  { name: 'Heap Sort', component: HeapSortVisualizer },
 ]
 
 export default function SortingPage() {

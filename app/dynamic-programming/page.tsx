@@ -6,17 +6,16 @@ import { motion } from 'framer-motion'
 import { ArrowRight } from 'lucide-react'
 
 const dpAlgorithms = [
-  { name: 'Fibonacci Sequence', link: '/dynamic-programming/fibonacci' },
-  { name: 'Longest Common Subsequence', link: '/dynamic-programming/lcs' },
-  { name: '0/1 Knapsack Problem', link: '/dynamic-programming/knapsack' },
-  { name: 'Matrix Chain Multiplication', link: '/dynamic-programming/matrix-chain' },
+  { name: 'Longest Common Subsequence', slug: 'longest-common-subsequence' },
+  { name: '0/1 Knapsack Problem', slug: 'knapsack-problem' },
+  { name: 'Matrix Chain Multiplication', slug: 'matrix-chain-multiplication' },
 ]
 
 export default function DynamicProgrammingPage() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 ml-10 mr-10">
+    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 px-10">
       <div className="container mx-auto px-4 py-12">
         <motion.h1 
           className="text-3xl md:text-4xl font-bold mb-8 text-blue-800 text-center"
@@ -46,7 +45,7 @@ export default function DynamicProgrammingPage() {
             >
               <h3 className="text-xl font-semibold mb-4">{algo.name}</h3>
               <Link 
-                href={algo.link} 
+                href={`/dynamic-programming/${algo.slug}`}
                 className="text-blue-600 hover:text-blue-800 flex items-center transition-colors duration-300"
               >
                 Explore 
@@ -59,13 +58,6 @@ export default function DynamicProgrammingPage() {
               </Link>
             </motion.div>
           ))}
-        </motion.div>
-        <motion.div 
-          className="mt-12 text-center"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 0.5, duration: 0.5 }}
-        >
         </motion.div>
       </div>
     </div>

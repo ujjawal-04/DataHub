@@ -7,8 +7,6 @@ import Link from 'next/link'
 import BFSVisualizer from '../../components/graph/BFSVisualizer'
 import DFSVisualizer from '../../components/graph/DFSVisualizer'
 import DijkstraVisualizer from '../../components/graph/DijkstraVisualizer'
-import BellmanFordVisualizer from '../../components/graph/BellmanFordVisualizer'
-import PrimsVisualizer from '../../components/graph/PrimsVisualizer'
 import KruskalsVisualizer from '../../components/graph/KruskalVisualizer'
 import React from 'react'
 
@@ -16,8 +14,6 @@ const graphAlgorithms = [
   { name: 'Breadth-First Search (BFS)', component: BFSVisualizer },
   { name: 'Depth-First Search (DFS)', component: DFSVisualizer },
   { name: "Dijkstra's Algorithm", component: DijkstraVisualizer },
-  { name: 'Bellman-Ford Algorithm', component: BellmanFordVisualizer },
-  { name: "Prim's Algorithm", component: PrimsVisualizer },
   { name: "Kruskal's Algorithm", component: KruskalsVisualizer },
 ]
 

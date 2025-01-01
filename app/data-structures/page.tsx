@@ -1,9 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import ArrayVisualizer from '../../components/data-structures/ArrayVisualizer'
 import LinkedListVisualizer from '../../components/data-structures/LinkedListVisualizer'
 import StackVisualizer from '../../components/data-structures/StackVisualizer'
@@ -11,6 +10,7 @@ import QueueVisualizer from '../../components/data-structures/QueueVisualizer'
 import TreeVisualizer from '../../components/data-structures/TreeVisualizer'
 import GraphVisualizer from '../../components/data-structures/GraphVisualizer'
 import HashTableVisualizer from '../../components/data-structures/HashTableVisualizer'
+import BackButton from '@/components/BackButton'
 
 const dataStructures = [
   { name: 'Arrays', component: ArrayVisualizer },
@@ -35,6 +35,7 @@ export default function DataStructuresPage() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
+          <BackButton/>
           Data Structures
         </motion.h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">

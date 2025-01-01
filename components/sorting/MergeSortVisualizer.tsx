@@ -6,24 +6,21 @@ import { motion } from 'framer-motion'
 export default function MergeSortVisualizer() {
   const [array, setArray] = useState<number[]>([])
   const [sorting, setSorting] = useState(false)
-  const [arraySize, setArraySize] = useState(20)
-  const [steps, setSteps] = useState<string[]>([])
-  const [inputValues, setInputValues] = useState('')
+  const [steps, setSteps] = useState<string[]>([]) // To store the array state after each step for visualization
+  const [inputValues, setInputValues] = useState('') // To allow user input for custom array
 
-  useEffect(() => {
-    resetArray()
-  }, [arraySize])
-
+  // Reset array with random values
   const resetArray = () => {
     const newArray = []
-    for (let i = 0; i < arraySize; i++) {
+    for (let i = 0; i < 20; i++) {
       newArray.push(Math.floor(Math.random() * 100) + 1)
     }
     setArray(newArray)
-    setSteps([])
-    setInputValues('')
+    setSteps([]) // Reset steps when array is reset
+    setInputValues('') // Clear user input when resetting
   }
 
+  // Function to handle user input and set the array
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValues(e.target.value)
   }
@@ -31,68 +28,99 @@ export default function MergeSortVisualizer() {
   const handleSubmitInput = () => {
     const inputArray = inputValues.split(',').map((str) => {
       const num = parseInt(str.trim())
-      return isNaN(num) ? 0 : num
+      return isNaN(num) ? 0 : num // Set 0 if the input is not a valid number
     })
     setArray(inputArray)
-    setSteps([])
+    setSteps([]) // Clear the steps when setting a custom array
   }
 
-  const merge = async (arr: number[], left: number, mid: number, right: number) => {
-    let temp: number[] = []
-    let i = left
-    let j = mid + 1
-
-    while (i <= mid && j <= right) {
-      if (arr[i] < arr[j]) {
-        temp.push(arr[i])
-        i++
-      } else {
-        temp.push(arr[j])
-        j++
-      }
-    }
-
-    while (i <= mid) temp.push(arr[i++])
-    while (j <= right) temp.push(arr[j++])
-
-    for (let k = left; k <= right; k++) {
-      arr[k] = temp[k - left]
-    }
-    setSteps([...steps, `Step ${steps.length + 1}: ${arr.join(', ')}`])
-    setArray([...arr])
-    await new Promise(resolve => setTimeout(resolve, 100))
-  }
-
-  const mergeSort = async (arr: number[], left: number, right: number) => {
-    if (left < right) {
-      const mid = Math.floor((left + right) / 2)
-      await mergeSort(arr, left, mid)
-      await mergeSort(arr, mid + 1, right)
-      await merge(arr, left, mid, right)
-    }
-  }
-
-  const startMergeSort = async () => {
+  // Merge Sort Algorithm
+  const mergeSort = async () => {
     setSorting(true)
     const arr = [...array]
-    await mergeSort(arr, 0, arr.length - 1)
+    let currentSteps: string[] = []
+
+    const merge = (left: number[], right: number[]) => {
+      const result = []
+      let i = 0
+      let j = 0
+
+      while (i < left.length && j < right.length) {
+        if (left[i] < right[j]) {
+          result.push(left[i])
+          i++
+        } else {
+          result.push(right[j])
+          j++
+        }
+      }
+      return [...result, ...left.slice(i), ...right.slice(j)]
+    }
+
+    const mergeSortRecursive = async (arr: number[]) => {
+      if (arr.length <= 1) return arr
+
+      const mid = Math.floor(arr.length / 2)
+      const left = arr.slice(0, mid)
+      const right = arr.slice(mid)
+
+      const sortedLeft = await mergeSortRecursive(left)
+      const sortedRight = await mergeSortRecursive(right)
+
+      const merged = merge(sortedLeft, sortedRight)
+      currentSteps.push(`Step ${currentSteps.length + 1}: ${merged.join(', ')}`)
+      setSteps([...currentSteps]) // Update steps
+      setArray([...merged]) // Update displayed array
+
+      await new Promise(resolve => setTimeout(resolve, 500)) // Delay for visualization
+
+      return merged
+    }
+
+    await mergeSortRecursive(arr) // Start merge sort
     setSorting(false)
   }
 
   return (
     <div className="bg-gradient-to-br from-blue-50 to-blue-100 p-6 rounded-lg shadow-lg">
       <div className="mb-4">
-        <button onClick={resetArray} disabled={sorting} className="bg-blue-200 text-blue-800 hover:bg-blue-300 px-4 py-2 rounded-lg transition-all">Reset Array</button>
-        <button onClick={startMergeSort} disabled={sorting} className="bg-green-600 text-white hover:bg-green-500 px-4 py-2 rounded-lg transition-all ml-2">Sort</button>
+        <button
+          onClick={resetArray}
+          disabled={sorting}
+          className="bg-blue-200 text-blue-800 hover:bg-blue-300 px-4 py-2 rounded-lg transition-all"
+        >
+          Reset Array
+        </button>
+        <button
+          onClick={mergeSort}
+          disabled={sorting}
+          className="bg-green-600 text-white hover:bg-green-500 px-4 py-2 rounded-lg transition-all ml-2"
+        >
+          Sort with Merge Sort
+        </button>
       </div>
+
+      {/* Input for custom array values */}
       <div className="flex mb-4">
         <div className="mr-4">
           <label className="text-blue-800">Enter Array (comma separated)</label>
-          <input type="text" value={inputValues} onChange={handleInputChange} className="p-2 rounded-lg border-2 border-blue-300 w-full" placeholder="e.g., 34, 7, 23, 5" />
+          <input
+            type="text"
+            value={inputValues}
+            onChange={handleInputChange}
+            className="p-2 rounded-lg border-2 border-blue-300 w-full"
+            placeholder="e.g., 34, 7, 23, 5"
+          />
         </div>
-        <button onClick={handleSubmitInput} className="bg-blue-500 text-white hover:bg-blue-400 px-4 py-2 rounded-lg mt-6">Set Array</button>
+        <button
+          onClick={handleSubmitInput}
+          className="bg-blue-500 text-white hover:bg-blue-400 px-4 py-2 rounded-lg mt-6"
+        >
+          Set Array
+        </button>
       </div>
 
+      {/* Show Sorting Steps in Boxes */}
       <div className="mt-4">
         <h2 className="text-lg font-semibold text-blue-800">Sorting Steps</h2>
         <div className="bg-blue-100 p-4 rounded-lg mt-2">
@@ -108,12 +136,20 @@ export default function MergeSortVisualizer() {
         </div>
       </div>
 
+      {/* Show the final sorted array in a single line */}
       {steps.length > 0 && !sorting && (
         <div className="mt-6">
           <h2 className="text-lg font-semibold text-blue-800">Sorted Array</h2>
           <div className="bg-white p-4 rounded-lg shadow-md mt-2 flex justify-center flex-wrap gap-2">
             {array.map((value, idx) => (
-              <motion.div key={idx} className="bg-blue-600 text-white p-2 rounded-lg shadow-md" style={{ minWidth: '50px', textAlign: 'center' }} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.5, delay: idx * 0.05 }}>
+              <motion.div
+                key={idx}
+                className="bg-blue-600 text-white p-2 rounded-lg shadow-md"
+                style={{ minWidth: '50px', textAlign: 'center' }}
+                initial={{ opacity: 0, y: 20 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ duration: 0.5, delay: idx * 0.05 }}
+              >
                 {value}
               </motion.div>
             ))}

@@ -9,10 +9,18 @@ export default function BubbleSortVisualizer() {
   const [arraySize, setArraySize] = useState(20)
   const [steps, setSteps] = useState<string[]>([]) // To store the array state after each swap for visualization
   const [inputValues, setInputValues] = useState('') // To allow user input for custom array
+  const [defaultArray, setDefaultArray] = useState<number[]>([]) // Store the default array for resetting
+
+  // Default array setup
+  useEffect(() => {
+    resetArray() // Set default array when the component is mounted
+  }, [])
 
   // Reset array when size changes or user input changes
   useEffect(() => {
-    resetArray()
+    if (inputValues === '') {
+      resetArray()
+    }
   }, [arraySize])
 
   // Reset array with random values
@@ -21,7 +29,8 @@ export default function BubbleSortVisualizer() {
     for (let i = 0; i < arraySize; i++) {
       newArray.push(Math.floor(Math.random() * 100) + 1)
     }
-    setArray(newArray)
+    setDefaultArray(newArray) // Store the default array for resetting
+    setArray([...newArray]) // Set the array for visualization
     setSteps([]) // Reset steps when array is reset
     setInputValues('') // Clear user input when resetting
   }
