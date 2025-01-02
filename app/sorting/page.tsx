@@ -1,9 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import BubbleSortVisualizer from '../../components/sorting/BubbleSortVisualizer'
 import SelectionSortVisualizer from '../../components/sorting/SelectionSortVisualizer'
 import InsertionSortVisualizer from '../../components/sorting/InsertionSortVisualizer'

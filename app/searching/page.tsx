@@ -1,9 +1,8 @@
 'use client'
 
 import { useState } from 'react'
-import Link from 'next/link'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ArrowRight, ChevronDown } from 'lucide-react'
+import { ChevronDown } from 'lucide-react'
 import LinearSearchVisualizer from '../../components/searching/LinearSearchVisualizer'
 import BinarySearchVisualizer from '../../components/searching/BinarySearchVisualizer'
 import BackButton from '@/components/BackButton'

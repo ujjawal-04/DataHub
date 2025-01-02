@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 export default function InsertionSortVisualizer() {
   const [array, setArray] = useState<number[]>([])
   const [sorting, setSorting] = useState(false)
-  const [arraySize, setArraySize] = useState(20)
+  const [arraySize] = useState(20)
   const [steps, setSteps] = useState<string[]>([]) // To store the array state after each step for visualization
   const [inputValues, setInputValues] = useState('') // To allow user input for custom array
 
@@ -45,10 +45,10 @@ export default function InsertionSortVisualizer() {
     setSorting(true)
     const arr = [...array]
     const n = arr.length
-    let currentSteps: string[] = []
+    const currentSteps: string[] = []
 
     for (let i = 1; i < n; i++) {
-      let key = arr[i]
+      const key = arr[i]
       let j = i - 1
 
       // Move elements of arr[0..i-1] that are greater than key to one position ahead of their current position

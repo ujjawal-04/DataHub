@@ -27,7 +27,7 @@ type Step = {
 }
 
 export default function KruskalVisualizer() {
-  const [graph, setGraph] = useState<Graph>({
+  const [graph] = useState<Graph>({
     nodes: [
       { id: 0, x: 50, y: 50 },
       { id: 1, x: 200, y: 50 },
@@ -99,8 +99,8 @@ export default function KruskalVisualizer() {
     // Sort edges by weight
     const sortedEdges = [...graph.edges].sort((a, b) => a.weight - b.weight)
 
-    let mstEdges: Edge[] = []
-    let visited: number[] = []
+    const mstEdges: Edge[] = []
+    const visited: number[] = []
 
     newSteps.push({
       description: "Initialize Kruskal's algorithm, sort edges by weight.",
@@ -108,7 +108,7 @@ export default function KruskalVisualizer() {
       visited: [],
     })
 
-    for (let edge of sortedEdges) {
+    for (const edge of sortedEdges) {
       const { from, to } = edge
       const root1 = find(from)
       const root2 = find(to)
@@ -226,7 +226,7 @@ export default function KruskalVisualizer() {
           })}
           {graph.nodes.map((node) => {
             const isVisited = steps[currentStep]?.visited.includes(node.id)
-            let fillColor = isVisited ? '#34d399' : '#fff'
+            const fillColor = isVisited ? '#34d399' : '#fff'
 
             return (
               <motion.circle

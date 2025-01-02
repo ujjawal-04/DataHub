@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, useScroll, useTransform } from 'framer-motion'
+import { motion, useScroll} from 'framer-motion'
 import { ArrowRight, BarChart2, Search, Share2, Database, GitBranch, Scissors, BookOpen, Users, Zap, Brain, Lightbulb, Rocket } from 'lucide-react'
 
 const features = [
@@ -51,8 +51,6 @@ const fadeInUp = {
 }
 
 export default function Home() {
-  const { scrollYProgress } = useScroll()
-  const backgroundY = useTransform(scrollYProgress, [0, 1], ['0%', '100%'])
 
   return (
     <div className="bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 text-gray-900 overflow-hidden">

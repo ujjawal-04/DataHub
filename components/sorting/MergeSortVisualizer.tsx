@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState} from 'react'
 import { motion } from 'framer-motion'
 
 export default function MergeSortVisualizer() {
@@ -38,7 +38,7 @@ export default function MergeSortVisualizer() {
   const mergeSort = async () => {
     setSorting(true)
     const arr = [...array]
-    let currentSteps: string[] = []
+    const currentSteps: string[] = []
 
     const merge = (left: number[], right: number[]) => {
       const result = []

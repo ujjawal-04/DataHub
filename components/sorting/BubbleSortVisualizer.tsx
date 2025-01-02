@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 export default function BubbleSortVisualizer() {
   const [array, setArray] = useState<number[]>([])
   const [sorting, setSorting] = useState(false)
-  const [arraySize, setArraySize] = useState(20)
+  const [arraySize] = useState(20)
   const [steps, setSteps] = useState<string[]>([]) // To store the array state after each swap for visualization
   const [inputValues, setInputValues] = useState('') // To allow user input for custom array
   const [defaultArray, setDefaultArray] = useState<number[]>([]) // Store the default array for resetting
@@ -54,7 +54,7 @@ export default function BubbleSortVisualizer() {
     setSorting(true)
     const arr = [...array]
     const n = arr.length
-    let currentSteps: string[] = []
+    const currentSteps: string[] = []
 
     for (let i = 0; i < n - 1; i++) {
       for (let j = 0; j < n - i - 1; j++) {

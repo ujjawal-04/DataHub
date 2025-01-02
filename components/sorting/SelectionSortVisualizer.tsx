@@ -6,7 +6,7 @@ import { motion } from 'framer-motion'
 export default function SelectionSortVisualizer() {
   const [array, setArray] = useState<number[]>([])
   const [sorting, setSorting] = useState(false)
-  const [arraySize, setArraySize] = useState(20)
+  const [arraySize] = useState(20)
   const [steps, setSteps] = useState<string[]>([]) // To store the array state after each swap for visualization
   const [inputValues, setInputValues] = useState('')
 
@@ -43,7 +43,7 @@ export default function SelectionSortVisualizer() {
     setSorting(true)
     const arr = [...array]
     const n = arr.length
-    let currentSteps: string[] = []
+    const currentSteps: string[] = []
 
     for (let i = 0; i < n - 1; i++) {
       let minIndex = i

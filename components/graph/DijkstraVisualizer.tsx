@@ -29,7 +29,7 @@ type Step = {
 }
 
 export default function DijkstraVisualizer() {
-  const [graph, setGraph] = useState<Graph>({
+  const [graph] = useState<Graph>({
     nodes: [
       { id: 0, x: 50, y: 50 },
       { id: 1, x: 200, y: 50 },

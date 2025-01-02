@@ -27,7 +27,6 @@ export default function HashTableVisualizer() {
   const [value, setValue] = useState('')
   const [updateKey, setUpdateKey] = useState('')
   const [updateValue, setUpdateValue] = useState('')
-  const [isUpdating, setIsUpdating] = useState(false)
 
   const hash = (key: string) => {
     let total = 0

@@ -2,8 +2,7 @@
 
 import { useState } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
-import { ChevronDown, ArrowRight } from 'lucide-react'
-import Link from 'next/link'
+import { ChevronDown} from 'lucide-react'
 import BFSVisualizer from '../../components/graph/BFSVisualizer'
 import DFSVisualizer from '../../components/graph/DFSVisualizer'
 import DijkstraVisualizer from '../../components/graph/DijkstraVisualizer'
