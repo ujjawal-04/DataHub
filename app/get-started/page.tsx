@@ -48,18 +48,18 @@ export default function GetStartedPage() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 ml-10 mr-10">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 ml-10 mr-10">
       <div className="container mx-auto px-4 py-16 max-w-6xl">
         <motion.h1 
-          className="text-4xl md:text-5xl font-bold mb-6 text-blue-800 text-center"
+          className="text-4xl md:text-5xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          Get Started with AlgoViz Pro
+          Get Started with DataHub
         </motion.h1>
         <motion.p 
-          className="text-blue-600 mb-12 text-center text-lg max-w-2xl mx-auto"
+          className="text-gray-800 mb-12 text-center text-lg max-w-2xl mx-auto"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5, delay: 0.2 }}
@@ -70,7 +70,7 @@ export default function GetStartedPage() {
           {features.map((feature, index) => (
             <motion.div 
               key={index}
-              className="bg-white text-blue-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 relative overflow-hidden"
+              className="bg-white text-gray-800 p-8 rounded-xl shadow-lg hover:shadow-xl transition-shadow duration-300 relative overflow-hidden"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
@@ -83,12 +83,12 @@ export default function GetStartedPage() {
                 animate={{ scale: hoveredIndex === index ? 1 : 0, opacity: hoveredIndex === index ? 1 : 0 }}
                 transition={{ duration: 0.3 }}
               />
-              <feature.icon className="w-12 h-12 text-blue-600 mb-6 relative z-10" />
-              <h3 className="text-2xl font-semibold mb-3 relative z-10">{feature.title}</h3>
-              <p className="text-blue-600 mb-6 relative z-10">{feature.description}</p>
+              <feature.icon className="w-12 h-12 text-teal-600 mb-6 relative z-10" />
+              <h3 className="text-2xl font-semibold mb-3 relative z-10 text-gray-800">{feature.title}</h3>
+              <p className="text-gray-800 mb-6 relative z-10">{feature.description}</p>
               <Link 
                 href={feature.link} 
-                className="text-blue-600 hover:text-blue-800 flex items-center font-medium transition-colors duration-300 relative z-10"
+                className="text-teal-600 hover:text-teal-800 flex items-center font-medium transition-colors duration-300 relative z-10"
               >
                 Explore 
                 <motion.div
@@ -105,4 +105,3 @@ export default function GetStartedPage() {
     </div>
   )
 }
-

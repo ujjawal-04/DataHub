@@ -19,7 +19,7 @@ const Navbar = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
-            <Link href="/" className="text-2xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">
+            <Link href="/" className="text-4xl font-bold bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500">
               DataHub
             </Link>
           </div>
@@ -69,7 +69,7 @@ const Navbar = () => {
 const NavLink = ({ href, children, onClick }: { href: string; children: React.ReactNode; onClick?: () => void }) => (
   <Link href={href} onClick={onClick}>
     <motion.span
-      className="text-gray-700 hover:text-blue-600 px-3 py-2 rounded-md text-sm font-medium"
+      className="text-gray-700 hover:bg-gradient-to-br hover:from-teal-50 hover:via-emerald-50 hover:to-cyan-50 px-3 py-2 rounded-md text-sm font-medium transition-all"
       whileHover={{ scale: 1.05 }}
       whileTap={{ scale: 0.95 }}
     >
@@ -79,4 +79,3 @@ const NavLink = ({ href, children, onClick }: { href: string; children: React.Re
 )
 
 export default Navbar
-

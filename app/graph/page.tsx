@@ -9,6 +9,7 @@ import DFSVisualizer from '../../components/graph/DFSVisualizer'
 import DijkstraVisualizer from '../../components/graph/DijkstraVisualizer'
 import KruskalsVisualizer from '../../components/graph/KruskalVisualizer'
 import React from 'react'
+import BackButton from '@/components/BackButton'
 
 const graphAlgorithms = [
   { name: 'Breadth-First Search (BFS)', component: BFSVisualizer },
@@ -22,10 +23,11 @@ export default function GraphPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 ml-10 mr-10">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 ml-10 mr-10">
       <div className="container mx-auto px-4 py-12">
+        <BackButton/>
         <motion.h1 
-          className="text-3xl md:text-4xl font-bold mb-8 text-blue-800 text-center"
+          className="text-3xl md:text-4xl font-bold mb-8 text-transparent bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 bg-clip-text text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -36,7 +38,7 @@ export default function GraphPage() {
           <div className="col-span-1">
             <div className="md:hidden mb-4">
               <button
-                className="w-full bg-blue-600 text-white p-4 rounded-lg flex justify-between items-center"
+                className="w-full bg-teal-600 text-white p-4 rounded-lg flex justify-between items-center"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 <span>{selectedAlgo.name}</span>
@@ -54,8 +56,8 @@ export default function GraphPage() {
                   key={index}
                   className={`w-full text-left p-4 rounded-lg mb-2 transition-colors ${
                     selectedAlgo.name === algo.name 
-                      ? 'bg-blue-600 text-white' 
-                      : 'bg-white text-blue-800 hover:bg-blue-100'
+                      ? 'bg-teal-600 text-white' 
+                      : 'bg-white text-teal-800 hover:bg-teal-100'
                   }`}
                   onClick={() => {
                     setSelectedAlgo(algo)
@@ -75,7 +77,7 @@ export default function GraphPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-2xl font-semibold mb-4 text-blue-800">{selectedAlgo.name}</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-teal-800">{selectedAlgo.name}</h2>
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedAlgo.name}
@@ -100,4 +102,3 @@ export default function GraphPage() {
     </div>
   )
 }
-

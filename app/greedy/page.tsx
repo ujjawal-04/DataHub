@@ -7,6 +7,7 @@ import { ArrowRight } from 'lucide-react'
 import activityselection from '@/components/greedy/activityselection'
 import fractionalknapsack from '@/components/greedy/fractionalknapsack'
 import huffmancoding from '@/components/greedy/huffmancoding'
+import BackButton from '@/components/BackButton'
 
 const greedyAlgorithms = [
   { name: 'Activity Selection', component: activityselection },
@@ -18,10 +19,11 @@ export default function GreedyPage() {
   const [hoveredIndex, setHoveredIndex] = useState<number | null>(null)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 ml-10 mr-10">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 ml-10 mr-10">
       <div className="container mx-auto px-4 py-12">
+        <BackButton/>
         <motion.h1 
-          className="text-3xl md:text-4xl font-bold mb-8 text-blue-800 text-center"
+          className="text-3xl md:text-4xl font-bold mb-8 text-transparent bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 bg-clip-text text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
@@ -37,7 +39,7 @@ export default function GreedyPage() {
           {greedyAlgorithms.map((algo, index) => (
             <motion.div 
               key={index} 
-              className="bg-white text-blue-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
+              className="bg-white text-teal-800 p-6 rounded-lg shadow-md hover:shadow-lg transition-shadow duration-300"
               initial={{ opacity: 0, y: 20 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.3, delay: index * 0.1 }}
@@ -48,12 +50,12 @@ export default function GreedyPage() {
             >
               <h3 className="text-xl font-semibold mb-4">{algo.name}</h3>
               <Link 
-                href={{
+                href={ {
                   pathname: '/greedy/[algorithm]',
                   query: { algorithm: algo.name.toLowerCase().replace(' ', '-') },
                 }}
                 as={`/greedy/${algo.name.toLowerCase().replace(' ', '-')}`}
-                className="text-blue-600 hover:text-blue-800 flex items-center transition-colors duration-300"
+                className="text-teal-600 hover:text-teal-800 flex items-center transition-colors duration-300"
               >
                 Explore 
                 <motion.div
@@ -77,4 +79,3 @@ export default function GreedyPage() {
     </div>
   )
 }
-

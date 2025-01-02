@@ -7,7 +7,7 @@ const Footer = () => {
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8">
           <div>
-            <h3 className="text-xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-blue-600 to-indigo-600">DataHub</h3>
+            <h3 className="text-xl font-bold mb-4 bg-clip-text text-transparent bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500">DataHub</h3>
             <p className="text-gray-600 mb-4">Visualize and learn algorithms interactively. Empowering learners to master data structures and algorithms through engaging visualizations.</p>
             <div className="flex space-x-4">
               <a href="#" className="text-gray-600 hover:text-blue-600 transition-colors">
@@ -60,7 +60,7 @@ const Footer = () => {
               </li>
             </ul>
             <div className="mt-4">
-              <Link href="/contact" className="inline-block bg-gradient-to-r from-blue-500 to-indigo-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:from-blue-600 hover:to-indigo-600 transition-colors">
+              <Link href="/contact" className="inline-block bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:from-teal-100 hover:to-cyan-100 transition-all">
                 Get in Touch
               </Link>
             </div>
@@ -82,4 +82,3 @@ const Footer = () => {
 }
 
 export default Footer
-

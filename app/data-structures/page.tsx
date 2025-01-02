@@ -27,22 +27,22 @@ export default function DataStructuresPage() {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   return (
-    <div className="min-h-screen bg-gradient-to-br from-blue-50 to-blue-100 ml-10 mr-10">
+    <div className="min-h-screen bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 ml-10 mr-10">
       <div className="container mx-auto px-4 py-8">
+      <BackButton />
         <motion.h1 
-          className="text-3xl md:text-4xl font-bold mb-6 text-blue-800 text-center"
+          className="text-3xl md:text-4xl font-bold mb-6 text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 text-center"
           initial={{ opacity: 0, y: -20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.5 }}
         >
-          <BackButton/>
           Data Structures
         </motion.h1>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
           <div className="col-span-1">
             <div className="md:hidden mb-4">
               <button
-                className="w-full bg-blue-600 text-white p-4 rounded-lg flex justify-between items-center"
+                className="w-full bg-teal-600 text-white p-4 rounded-lg flex justify-between items-center"
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
                 <span>{selectedDS.name}</span>
@@ -60,8 +60,8 @@ export default function DataStructuresPage() {
                   key={index}
                   className={`w-full text-left p-4 rounded-lg mb-2 transition-colors ${
                     selectedDS.name === ds.name 
-                      ? 'bg-blue-600 text-white' 
-                      : 'bg-white text-blue-800 hover:bg-blue-100'
+                      ? 'bg-teal-600 text-white' 
+                      : 'bg-white text-teal-800 hover:bg-teal-100'
                   }`}
                   onClick={() => {
                     setSelectedDS(ds)
@@ -81,7 +81,7 @@ export default function DataStructuresPage() {
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 0.5 }}
           >
-            <h2 className="text-2xl font-semibold mb-4 text-blue-800">{selectedDS.name}</h2>
+            <h2 className="text-2xl font-semibold mb-4 text-teal-800">{selectedDS.name}</h2>
             <AnimatePresence mode="wait">
               <motion.div
                 key={selectedDS.name}
@@ -106,4 +106,3 @@ export default function DataStructuresPage() {
     </div>
   )
 }
-

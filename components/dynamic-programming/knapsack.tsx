@@ -101,16 +101,6 @@ const Knapsack: React.FC = () => {
       transition={{ duration: 0.5 }}
       className="max-w-4xl mx-auto p-6 text-blue-800"
     >
-    <BackButton/>
-      <motion.h1 
-        initial={{ y: -20 }}
-        animate={{ y: 0 }}
-        transition={{ duration: 0.5 }}
-        className="text-3xl font-bold mb-4"
-      >
-        0/1 Knapsack Problem
-      </motion.h1>
-      
       <motion.div 
         variants={containerVariants}
         initial="hidden"

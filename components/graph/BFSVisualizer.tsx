@@ -186,7 +186,6 @@ export default function BFSVisualizer() {
 
   return (
     <div className="p-8 max-w-4xl mx-auto">
-      <h1 className="text-3xl font-bold text-center mb-6">Breadth-First Search (BFS) Visualizer</h1>
       
       {/* User Inputs for Graph (Nodes and Edges) */}
       <div className="mb-6 flex flex-col items-center space-y-4">
