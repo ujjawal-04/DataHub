@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -37,7 +37,8 @@ const Knapsack: React.FC = () => {
     setItems(items.filter((_, i) => i !== index));
   };
 
-  const solveKnapsack = () => {
+  // Wrap solveKnapsack with useCallback to ensure it doesn't change on every render
+  const solveKnapsack = useCallback(() => {
     const n = items.length;
     const dp: number[][] = Array(n + 1).fill(null).map(() => Array(capacity + 1).fill(0));
 
@@ -67,11 +68,11 @@ const Knapsack: React.FC = () => {
       }
     }
     setSelectedItems(selected);
-  };
+  }, [items, capacity]);  // Add necessary dependencies here
 
   useEffect(() => {
     solveKnapsack();
-  }, [items, capacity]);
+  }, [solveKnapsack]);  // Add solveKnapsack as a dependency here
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -208,12 +209,12 @@ const Knapsack: React.FC = () => {
           <li>Initialize the first row and column with zeros.</li>
           <li>For each item i and weight w:</li>
           <ul className="list-disc list-inside ml-4 space-y-1">
-            <li>If the item's weight is less than or equal to w, choose the maximum of:</li>
+            <li>If the item&apos;s weight is less than or equal to w, choose the maximum of:</li>
             <ul className="list-disc list-inside ml-8 space-y-1">
               <li>The value of the item plus the value of the remaining capacity (i-1, w-weight[i])</li>
               <li>The value without including this item (i-1, w)</li>
             </ul>
-            <li>If the item's weight is greater than w, copy the value from the previous row (i-1, w)</li>
+            <li>If the item&apos;s weight is greater than w, copy the value from the previous row (i-1, w)</li>
           </ul>
           <li>The bottom-right cell contains the maximum value achievable.</li>
           <li>Backtrack through the table to determine which items were selected.</li>
@@ -227,4 +228,3 @@ const Knapsack: React.FC = () => {
 }
 
 export default Knapsack
-

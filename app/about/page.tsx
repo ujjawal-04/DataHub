@@ -147,7 +147,7 @@ export default function AboutPage() {
             At DataHub, we believe that understanding data structures, algorithms, and data science concepts is fundamental to becoming a proficient data professional. Our mission is to demystify these concepts and make them accessible to everyone, regardless of their background or experience level.
           </p>
           <p className="text-gray-700">
-            Whether you're a student preparing for exams, a developer looking to enhance your data skills, or a data enthusiast curious about advanced analytics, DataHub provides an intuitive and interactive way to explore these essential concepts in the world of data.
+            Whether you&apos;re a student preparing for exams, a developer looking to enhance your data skills, or a data enthusiast curious about advanced analytics, DataHub provides an intuitive and interactive way to explore these essential concepts in the world of data.
           </p>
         </motion.div>
 

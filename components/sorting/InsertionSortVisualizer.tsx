@@ -1,22 +1,17 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 
 export default function InsertionSortVisualizer() {
   const [array, setArray] = useState<number[]>([])
   const [sorting, setSorting] = useState(false)
-  const [arraySize] = useState(20)
+  const [arraySize, setArraySize] = useState(20)
   const [steps, setSteps] = useState<string[]>([]) // To store the array state after each step for visualization
   const [inputValues, setInputValues] = useState('') // To allow user input for custom array
 
-  // Reset array when size changes or user input changes
-  useEffect(() => {
-    resetArray()
-  }, [arraySize])
-
-  // Reset array with random values
-  const resetArray = () => {
+  // Wrap the resetArray function in useCallback to avoid re-creating it on each render
+  const resetArray = useCallback(() => {
     const newArray = []
     for (let i = 0; i < arraySize; i++) {
       newArray.push(Math.floor(Math.random() * 100) + 1)
@@ -24,7 +19,11 @@ export default function InsertionSortVisualizer() {
     setArray(newArray)
     setSteps([]) // Reset steps when array is reset
     setInputValues('') // Clear user input when resetting
-  }
+  }, [arraySize]) // Dependency array ensures resetArray is recreated only when arraySize changes
+
+  useEffect(() => {
+    resetArray()
+  }, [arraySize, resetArray]) // Trigger the resetArray function when arraySize changes
 
   // Function to handle user input and set the array
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -103,6 +102,21 @@ export default function InsertionSortVisualizer() {
         >
           Set Array
         </button>
+      </div>
+
+      {/* Input for changing array size */}
+      <div className="flex mb-4">
+        <div className="mr-4">
+          <label className="text-blue-800">Array Size</label>
+          <input
+            type="number"
+            value={arraySize}
+            onChange={(e) => setArraySize(Number(e.target.value))}
+            className="p-2 rounded-lg border-2 border-blue-300 w-full"
+            min="5"
+            max="50"
+          />
+        </div>
       </div>
 
       {/* Show Sorting Steps in Boxes */}

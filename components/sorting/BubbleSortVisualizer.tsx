@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 
 export default function BubbleSortVisualizer() {
@@ -9,33 +9,30 @@ export default function BubbleSortVisualizer() {
   const [arraySize] = useState(20)
   const [steps, setSteps] = useState<string[]>([]) // To store the array state after each swap for visualization
   const [inputValues, setInputValues] = useState('') // To allow user input for custom array
-  const [defaultArray, setDefaultArray] = useState<number[]>([]) // Store the default array for resetting
 
-  // Default array setup
-  useEffect(() => {
-    resetArray() // Set default array when the component is mounted
-  }, [])
-
-  // Reset array when size changes or user input changes
-  useEffect(() => {
-    if (inputValues === '') {
-      resetArray()
-    }
-  }, [arraySize])
-
-  // Reset array with random values
-  const resetArray = () => {
+  // Wrap resetArray with useCallback to avoid unnecessary re-renders
+  const resetArray = useCallback(() => {
     const newArray = []
     for (let i = 0; i < arraySize; i++) {
       newArray.push(Math.floor(Math.random() * 100) + 1)
     }
-    setDefaultArray(newArray) // Store the default array for resetting
     setArray([...newArray]) // Set the array for visualization
     setSteps([]) // Reset steps when array is reset
     setInputValues('') // Clear user input when resetting
-  }
+  }, [arraySize])
 
-  // Function to handle user input and set the array
+  // Trigger resetArray when the component is mounted
+  useEffect(() => {
+    resetArray()
+  }, [resetArray]) // Only call resetArray once when the component mounts
+
+  // Reset array when size changes or user input changes
+  useEffect(() => {
+    if (inputValues === '') {
+      resetArray() // Trigger array reset if input is empty
+    }
+  }, [arraySize, inputValues, resetArray]) // Add inputValues and resetArray as dependencies
+
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValues(e.target.value)
   }

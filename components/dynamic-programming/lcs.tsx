@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -19,7 +19,8 @@ const LCS: React.FC = () => {
   const [lcsResult, setLcsResult] = useState<string>('');
   const [highlightedCells, setHighlightedCells] = useState<[number, number][]>([]);
 
-  const computeLCS = () => {
+  // Wrap computeLCS in useCallback
+  const computeLCS = useCallback(() => {
     const m = string1.length;
     const n = string2.length;
     const matrix: LCSCell[][] = Array(m + 1).fill(null).map(() => 
@@ -61,11 +62,11 @@ const LCS: React.FC = () => {
 
     setLcsResult(lcs);
     setHighlightedCells(highlightCells.reverse());
-  };
+  }, [string1, string2]); // Adding string1 and string2 as dependencies
 
   useEffect(() => {
     computeLCS();
-  }, [string1, string2]);
+  }, [computeLCS]); // Now the effect will only run when computeLCS changes
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -194,7 +195,7 @@ const LCS: React.FC = () => {
           <li>Iterate through the matrix:</li>
           <ul className="list-disc list-inside ml-4 space-y-1">
             <li>If the characters match, take the value from the diagonal and add 1.</li>
-            <li>If they don't match, take the maximum of the left and top cell.</li>
+            <li>If they don&apos;t match, take the maximum of the left and top cell.</li>
           </ul>
           <li>The bottom-right cell contains the length of the LCS.</li>
           <li>Backtrack from the bottom-right to construct the LCS:</li>
@@ -212,4 +213,3 @@ const LCS: React.FC = () => {
 }
 
 export default LCS
-

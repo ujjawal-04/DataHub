@@ -1,6 +1,6 @@
 'use client'
 
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 
 export default function SelectionSortVisualizer() {
@@ -10,13 +10,8 @@ export default function SelectionSortVisualizer() {
   const [steps, setSteps] = useState<string[]>([]) // To store the array state after each swap for visualization
   const [inputValues, setInputValues] = useState('')
 
-  // Reset array when size changes or user input changes
-  useEffect(() => {
-    resetArray()
-  }, [arraySize])
-
-  // Reset array with random values
-  const resetArray = () => {
+  // Wrap the resetArray function in useCallback to prevent unnecessary recreation of the function
+  const resetArray = useCallback(() => {
     const newArray = []
     for (let i = 0; i < arraySize; i++) {
       newArray.push(Math.floor(Math.random() * 100) + 1)
@@ -24,7 +19,12 @@ export default function SelectionSortVisualizer() {
     setArray(newArray)
     setSteps([])
     setInputValues('')
-  }
+  }, [arraySize]) // Dependency array ensures resetArray is recreated only when arraySize changes
+
+  // Use useEffect to call resetArray when arraySize changes
+  useEffect(() => {
+    resetArray()
+  }, [arraySize, resetArray]) // Trigger resetArray only when arraySize or resetArray changes
 
   const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setInputValues(e.target.value)

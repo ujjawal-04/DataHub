@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useCallback } from 'react'
 import { motion } from 'framer-motion'
 
 type Node = {
@@ -157,20 +157,20 @@ export default function DijkstraVisualizer() {
     }
   }
 
-  const autoPlay = async () => {
+  const autoPlay = useCallback(async () => {
     for (let i = currentStep; i < steps.length; i++) {
       if (!isRunning) break
       setCurrentStep(i)
       await new Promise((resolve) => setTimeout(resolve, 1000))
     }
     setIsRunning(false)
-  }
+  }, [currentStep, isRunning, steps.length])
 
   useEffect(() => {
     if (isRunning) {
       autoPlay()
     }
-  }, [isRunning])
+  }, [isRunning, autoPlay])
 
   return (
     <div className="p-8 max-w-4xl mx-auto">

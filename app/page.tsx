@@ -2,7 +2,7 @@
 
 import Link from 'next/link'
 import Image from 'next/image'
-import { motion, useScroll} from 'framer-motion'
+import { motion} from 'framer-motion'
 import { ArrowRight, BarChart2, Search, Share2, Database, GitBranch, Scissors, BookOpen, Users, Zap, Brain, Lightbulb, Rocket } from 'lucide-react'
 
 const features = [
@@ -252,7 +252,7 @@ export default function Home() {
             {...fadeInUp}
             transition={{ delay: 0.2, ...fadeInUp.transition }}
           >
-            Whether you're a beginner or an experienced programmer, DataHub has something for everyone. Dive into our interactive lessons and take your skills to the next level.
+            Whether you&apos;re a beginner or an experienced programmer, DataHub has something for everyone. Dive into our interactive lessons and take your skills to the next level.
           </motion.p>
           <motion.div
             className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12"

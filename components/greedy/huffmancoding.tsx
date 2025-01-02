@@ -1,7 +1,7 @@
 'use client'
 
 import React, { JSX, useState } from 'react'
-import { motion, AnimatePresence } from 'framer-motion'
+import { motion} from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
@@ -61,7 +61,7 @@ const HuffmanCoding: React.FC = () => {
   };
 
   const buildHuffmanTree = (): HuffmanNode => {
-    let nodes: HuffmanNode[] = characters.map((char, index) => ({
+    const nodes: HuffmanNode[] = characters.map((char, index) => ({
       char,
       freq: frequencies[index]
     }));
@@ -321,7 +321,7 @@ const HuffmanCoding: React.FC = () => {
             <li>Add the new node back to the queue.</li>
           </ul>
           <li>The remaining node is the root of the Huffman tree.</li>
-          <li>Traverse the tree, assigning '0' for left branches and '1' for right branches.</li>
+          <li>Traverse the tree, assigning &apos;0&apos; for left branches and &apos;1&apos; for right branches.</li>
           <li>The resulting codes for each character form the Huffman encoding.</li>
         </ol>
         <p className="mt-4">

@@ -87,7 +87,7 @@ export default function QueueVisualizer() {
 
       {/* Notes */}
       <div className="mt-6 text-sm text-gray-600">
-        <p><strong>Note:</strong> Double-click any queue element to remove it. Use "Enqueue" to add items, and "Dequeue" to remove the front item.</p>
+        <p><strong>Note:</strong> Double-click any queue element to remove it. Use &quot;Enqueue&quot; to add items, and &quot;Dequeue&quot; to remove the front item.</p>
       </div>
     </div>
   )

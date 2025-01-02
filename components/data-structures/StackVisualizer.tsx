@@ -87,7 +87,7 @@ export default function StackVisualizer() {
 
       {/* Notes */}
       <div className="mt-6 text-sm text-gray-600">
-        <p><strong>Note:</strong> Double-click any stack element to remove it. Use "Pop" to remove the topmost element.</p>
+        <p><strong>Note:</strong> Double-click any stack element to remove it. Use &quot;Pop&quot; to remove the topmost element.</p>
       </div>
     </div>
   )

@@ -163,20 +163,20 @@ export default function DFSVisualizer() {
   }
 
   // Auto-play DFS steps
-  const autoPlay = async () => {
-    for (let i = currentStep; i < steps.length; i++) {
-      if (!isRunning) break
-      setCurrentStep(i)
-      await new Promise((resolve) => setTimeout(resolve, 1000))
-    }
-    setIsRunning(false)
-  }
-
   useEffect(() => {
+    const autoPlay = async () => {
+      for (let i = currentStep; i < steps.length; i++) {
+        if (!isRunning) break
+        setCurrentStep(i)
+        await new Promise((resolve) => setTimeout(resolve, 1000))
+      }
+      setIsRunning(false)
+    }
+
     if (isRunning) {
       autoPlay()
     }
-  }, [isRunning])
+  }, [isRunning, currentStep, steps])  // Ensure the dependencies are correct
 
   if (!hasMounted) {
     return null

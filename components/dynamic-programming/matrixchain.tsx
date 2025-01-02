@@ -1,6 +1,4 @@
-'use client'
-
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
@@ -47,7 +45,16 @@ const MatrixChain: React.FC = () => {
     }
   };
 
-  const matrixChainOrder = () => {
+  const matrixChainOrder = useCallback(() => {
+    // Move printOptimalParens function inside the callback to avoid the warning
+    const printOptimalParens = (s: number[][], i: number, j: number): string => {
+      if (i === j) {
+        return `A${i + 1}`;
+      } else {
+        return `(${printOptimalParens(s, i, s[i][j])} ${printOptimalParens(s, s[i][j] + 1, j)})`;
+      }
+    };
+
     const n = matrices.length;
     const m: number[][] = Array(n).fill(null).map(() => Array(n).fill(0));
     const s: number[][] = Array(n).fill(null).map(() => Array(n).fill(0));
@@ -69,19 +76,11 @@ const MatrixChain: React.FC = () => {
     setDpTable(m);
     const order = printOptimalParens(s, 0, n - 1);
     setOptimalOrder(order);
-  };
-
-  const printOptimalParens = (s: number[][], i: number, j: number): string => {
-    if (i === j) {
-      return `A${i + 1}`;
-    } else {
-      return `(${printOptimalParens(s, i, s[i][j])} ${printOptimalParens(s, s[i][j] + 1, j)})`;
-    }
-  };
+  }, [matrices]);
 
   useEffect(() => {
     matrixChainOrder();
-  }, [matrices]);
+  }, [matrixChainOrder]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -220,5 +219,4 @@ const MatrixChain: React.FC = () => {
   )
 }
 
-export default MatrixChain
-
+export default MatrixChain;

@@ -1,6 +1,6 @@
 'use client'
 
-import { JSX, useState, useEffect, useCallback } from 'react'
+import { JSX, useState, useEffect, useCallback, useMemo } from 'react'
 import { motion, AnimatePresence } from 'framer-motion'
 
 interface TreeNode {
@@ -14,8 +14,8 @@ export default function TreeVisualizer() {
   const [newValue, setNewValue] = useState('')
   const [error, setError] = useState('')
 
-  // Default values to initialize the tree with
-  const defaultValues = [10, 20, 5, 15, 30, 25]
+  // Memoize defaultValues to ensure it remains stable across renders
+  const defaultValues = useMemo(() => [10, 20, 5, 15, 30, 25], [])
 
   // Insert a new node in the binary tree
   const insertNode = useCallback((value: number, node: TreeNode | null): TreeNode => {
@@ -41,6 +41,7 @@ export default function TreeVisualizer() {
         return
       }
       setRoot((prevRoot) => {
+        if (!prevRoot) return insertNode(value, null)
         const newRoot = { ...prevRoot } as TreeNode
         return insertNode(value, newRoot)
       })
@@ -164,7 +165,7 @@ export default function TreeVisualizer() {
       newRoot = insertNode(value, newRoot)
     })
     setRoot(newRoot)
-  }, [insertNode])
+  }, [insertNode, defaultValues])  // defaultValues now is stable due to useMemo
 
   return (
     <div className="bg-white p-6 rounded-lg shadow-lg">
@@ -202,9 +203,8 @@ export default function TreeVisualizer() {
       </AnimatePresence>
 
       <div className="mt-6 text-sm text-gray-600">
-        <p><strong>Note:</strong> Double-click any node to remove it. Use "Add Node" to insert nodes into the tree.</p>
+        <p><strong>Note:</strong> Double-click any node to remove it. Use &quot;Add Node&quot; to insert nodes into the tree.</p>
       </div>
     </div>
   )
 }
-

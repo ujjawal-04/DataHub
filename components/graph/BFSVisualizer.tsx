@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect,useCallback } from 'react'
 import { motion } from 'framer-motion'
 
 type Node = {
@@ -164,20 +164,20 @@ export default function BFSVisualizer() {
   }
 
   // Auto-play BFS steps
-  const autoPlay = async () => {
+  const autoPlay = useCallback(async () => {
     for (let i = currentStep; i < steps.length; i++) {
       if (!isRunning) break
       setCurrentStep(i)
       await new Promise((resolve) => setTimeout(resolve, 1000))
     }
     setIsRunning(false)
-  }
+  }, [currentStep, steps.length, isRunning]) 
 
   useEffect(() => {
     if (isRunning) {
       autoPlay()
     }
-  }, [isRunning])
+  }, [isRunning,autoPlay])
 
   // Prevent rendering random values on the server-side
   if (!hasMounted) {

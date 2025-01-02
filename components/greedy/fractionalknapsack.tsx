@@ -10,6 +10,7 @@ interface Item {
   id: number;
   weight: number;
   value: number;
+  fraction?: number;  // Add the fraction field as an optional property
 }
 
 const FractionalKnapsack: React.FC = () => {
@@ -39,12 +40,12 @@ const FractionalKnapsack: React.FC = () => {
 
     for (const item of sortedItems) {
       if (remainingCapacity >= item.weight) {
-        selectedItems.push({ ...item, fraction: 1 })
+        selectedItems.push({ ...item, fraction: 1 }) // Add fraction for full item
         totalValue += item.value
         remainingCapacity -= item.weight
       } else if (remainingCapacity > 0) {
         const fraction = remainingCapacity / item.weight
-        selectedItems.push({ ...item, fraction })
+        selectedItems.push({ ...item, fraction }) // Add fraction for partial item
         totalValue += item.value * fraction
         remainingCapacity = 0
       } else {
@@ -253,7 +254,7 @@ const FractionalKnapsack: React.FC = () => {
           <li>Iterate through the sorted items:</li>
           <ul className="list-disc list-inside ml-4 space-y-1">
             <li>If the item fits entirely, add it to the knapsack.</li>
-            <li>If it doesn't fit entirely, add a fraction of the item to fill the remaining capacity.</li>
+            <li>If it doesn&apos;t fit entirely, add a fraction of the item to fill the remaining capacity.</li>
             <li>Stop when the knapsack is full or all items have been considered.</li>
           </ul>
           <li>The result is the optimal solution that maximizes the total value in the knapsack.</li>
@@ -264,4 +265,3 @@ const FractionalKnapsack: React.FC = () => {
 }
 
 export default FractionalKnapsack
-
