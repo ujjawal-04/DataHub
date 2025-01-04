@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect,useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 
 type Node = {
@@ -52,35 +52,31 @@ export default function BFSVisualizer() {
   const [currentStep, setCurrentStep] = useState<number>(0)
   const [isRunning, setIsRunning] = useState<boolean>(false)
   
-  // State for user input
   const [newNodeId, setNewNodeId] = useState<number>(6)
   const [newEdgeFrom, setNewEdgeFrom] = useState<number | string>('')
   const [newEdgeTo, setNewEdgeTo] = useState<number | string>('')
 
-  const [hasMounted, setHasMounted] = useState<boolean>(false) // State to track mounting
+  const [hasMounted, setHasMounted] = useState<boolean>(false)
 
   useEffect(() => {
-    setHasMounted(true) // Set to true when the component is mounted on the client side
+    setHasMounted(true)
   }, [])
 
-  // Reset graph visualization
   const resetVisualization = () => {
     setSteps([])
     setCurrentStep(0)
     setIsRunning(false)
   }
 
-  // Add a new node to the graph
   const addNode = () => {
     const newNode = { id: newNodeId, x: Math.random() * 350, y: Math.random() * 200 }
     setGraph((prevGraph) => ({
       ...prevGraph,
       nodes: [...prevGraph.nodes, newNode],
     }))
-    setNewNodeId(newNodeId + 1) // Increment for next node id
+    setNewNodeId(newNodeId + 1)
   }
 
-  // Add a new edge to the graph
   const addEdge = () => {
     if (newEdgeFrom && newEdgeTo && newEdgeFrom !== newEdgeTo) {
       setGraph((prevGraph) => ({
@@ -92,17 +88,15 @@ export default function BFSVisualizer() {
     setNewEdgeTo('')
   }
 
-  // Select start node for BFS
   const handleStartNodeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStartNode(parseInt(e.target.value))
-    resetVisualization() // Reset visualization when starting node changes
+    resetVisualization()
   }
 
   useEffect(() => {
     resetVisualization()
   }, [startNode])
 
-  // Run BFS algorithm
   const runBFS = () => {
     setIsRunning(true)
     const newSteps: Step[] = []
@@ -147,7 +141,6 @@ export default function BFSVisualizer() {
     setSteps(newSteps)
   }
 
-  // Step forward in BFS process
   const stepForward = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1)
@@ -156,14 +149,12 @@ export default function BFSVisualizer() {
     }
   }
 
-  // Step backward in BFS process
   const stepBackward = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1)
     }
   }
 
-  // Auto-play BFS steps
   const autoPlay = useCallback(async () => {
     for (let i = currentStep; i < steps.length; i++) {
       if (!isRunning) break
@@ -171,77 +162,73 @@ export default function BFSVisualizer() {
       await new Promise((resolve) => setTimeout(resolve, 1000))
     }
     setIsRunning(false)
-  }, [currentStep, steps.length, isRunning]) 
+  }, [currentStep, steps.length, isRunning])
 
   useEffect(() => {
     if (isRunning) {
       autoPlay()
     }
-  }, [isRunning,autoPlay])
+  }, [isRunning, autoPlay])
 
-  // Prevent rendering random values on the server-side
   if (!hasMounted) {
     return null
   }
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      
-      {/* User Inputs for Graph (Nodes and Edges) */}
+    <div className="p-4 sm:p-8 max-w-4xl mx-auto">
       <div className="mb-6 flex flex-col items-center space-y-4">
-        <div className="flex space-x-4">
+        <div className="flex flex-wrap justify-center gap-2">
           <button
             onClick={addNode}
-            className="bg-blue-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-blue-600 transition-colors"
+            className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-blue-600 transition-colors text-sm sm:text-base"
           >
             Add Node
           </button>
           <button
             onClick={addEdge}
-            className="bg-green-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-green-600 transition-colors"
+            className="bg-green-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-green-600 transition-colors text-sm sm:text-base"
           >
             Add Edge
           </button>
         </div>
 
-        <div className="flex space-x-4">
+        <div className="flex flex-wrap justify-center gap-2">
           <div>
-            <label className="text-lg">New Node ID</label>
+            <label className="text-sm sm:text-base">New Node ID</label>
             <input
               type="number"
               value={newNodeId}
               disabled
-              className="mt-2 p-2 border rounded-md"
+              className="mt-1 p-2 border rounded-md w-full"
             />
           </div>
           <div>
-            <label className="text-lg">Edge From</label>
+            <label className="text-sm sm:text-base">Edge From</label>
             <input
               type="number"
               value={newEdgeFrom}
               onChange={(e) => setNewEdgeFrom(e.target.value)}
-              className="mt-2 p-2 border rounded-md"
+              className="mt-1 p-2 border rounded-md w-full"
             />
           </div>
           <div>
-            <label className="text-lg">Edge To</label>
+            <label className="text-sm sm:text-base">Edge To</label>
             <input
               type="number"
               value={newEdgeTo}
               onChange={(e) => setNewEdgeTo(e.target.value)}
-              className="mt-2 p-2 border rounded-md"
+              className="mt-1 p-2 border rounded-md w-full"
             />
           </div>
         </div>
       </div>
 
-      {/* Start Node Selection */}
       <div className="mb-6">
-        <label className="text-lg">Select Start Node</label>
+        <label className="text-sm sm:text-base">Select Start Node</label>
         <select
           value={startNode}
           onChange={handleStartNodeChange}
-          className="p-2 border rounded-md mt-2"
+          className="p-2 border rounded-md mt-2 w-full"
         >
           {graph.nodes.map((node) => (
             <option key={node.id} value={node.id}>
@@ -251,45 +238,43 @@ export default function BFSVisualizer() {
         </select>
       </div>
 
-      {/* Buttons for BFS */}
-      <div className="mb-6 flex justify-center space-x-4">
+      <div className="mb-6 flex flex-wrap justify-center gap-2">
         <button
           onClick={runBFS}
           disabled={isRunning}
-          className="bg-blue-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-blue-600 disabled:opacity-50 transition-colors"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-blue-600 disabled:opacity-50 transition-colors text-sm sm:text-base"
         >
           Run BFS
         </button>
         <button
           onClick={() => setIsRunning(!isRunning)}
-          className="bg-green-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-green-600 transition-colors"
+          className="bg-green-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-green-600 transition-colors text-sm sm:text-base"
         >
           {isRunning ? 'Pause' : 'Play'}
         </button>
         <button
           onClick={stepBackward}
           disabled={currentStep === 0}
-          className="bg-yellow-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+          className="bg-yellow-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors text-sm sm:text-base"
         >
           Step Back
         </button>
         <button
           onClick={stepForward}
           disabled={currentStep === steps.length - 1}
-          className="bg-yellow-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+          className="bg-yellow-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors text-sm sm:text-base"
         >
           Step Forward
         </button>
         <button
           onClick={resetVisualization}
-          className="bg-red-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-red-600 transition-colors"
+          className="bg-red-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-red-600 transition-colors text-sm sm:text-base"
         >
           Reset
         </button>
       </div>
 
-      {/* Graph Visualization */}
-      <div className="mb-8">
+      <div className="mb-8 overflow-x-auto">
         <svg width="400" height="250" className="mx-auto">
           {graph.edges.map((edge, index) => {
             const fromNode = graph.nodes.find((n) => n.id === edge.from)!
@@ -350,22 +335,20 @@ export default function BFSVisualizer() {
         </svg>
       </div>
 
-      {/* Step Description */}
       <div className="mb-4">
-        <h2 className="text-xl font-bold mb-2">Current Step</h2>
+        <h2 className="text-lg sm:text-xl font-bold mb-2">Current Step</h2>
         <div className="bg-gray-100 p-4 rounded-md">
-          <p>{steps[currentStep]?.description || 'No steps yet'}</p>
+          <p className="text-sm sm:text-base">{steps[currentStep]?.description || 'No steps yet'}</p>
         </div>
       </div>
 
-      {/* Queue */}
       <div className="mb-4">
-        <h2 className="text-xl font-bold mb-2">Queue</h2>
-        <div className="flex space-x-2">
-          {steps[currentStep]?.queue.map((nodeId) => (
+        <h2 className="text-lg sm:text-xl font-bold mb-2">Queue</h2>
+        <div className="flex flex-wrap gap-2">
+          {steps[currentStep]?.queue.map((nodeId, index) => (
             <div
-              key={nodeId}
-              className="bg-blue-500 text-white w-8 h-8 flex items-center justify-center rounded-full"
+              key={`queue-${currentStep}-${index}-${nodeId}`}
+              className="bg-blue-500 text-white w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xs sm:text-sm"
             >
               {nodeId}
             </div>
@@ -373,14 +356,13 @@ export default function BFSVisualizer() {
         </div>
       </div>
 
-      {/* Visited Nodes */}
       <div>
-        <h2 className="text-xl font-bold mb-2">Visited Nodes</h2>
-        <div className="flex space-x-2">
-          {steps[currentStep]?.visited.map((nodeId) => (
+        <h2 className="text-lg sm:text-xl font-bold mb-2">Visited Nodes</h2>
+        <div className="flex flex-wrap gap-2">
+          {steps[currentStep]?.visited.map((nodeId, index) => (
             <div
-              key={nodeId}
-              className="bg-green-500 text-white w-8 h-8 flex items-center justify-center rounded-full"
+              key={`visited-${currentStep}-${index}-${nodeId}`}
+              className="bg-green-500 text-white w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xs sm:text-sm"
             >
               {nodeId}
             </div>
@@ -390,3 +372,4 @@ export default function BFSVisualizer() {
     </div>
   )
 }
+

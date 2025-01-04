@@ -1,7 +1,49 @@
+"use client"
+
+import { useState, useEffect } from 'react'
 import Link from 'next/link'
-import { Github, Twitter, Linkedin, Mail, MapPin, Phone } from 'lucide-react'
+import { Github, Twitter, Linkedin, ArrowUp, Brain } from 'lucide-react'
+import { Button } from "@/components/ui/button"
+import { Input } from "@/components/ui/input"
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover"
+
+const algorithmChallenges = [
+  "Implement a function to reverse a linked list",
+  "Write a function to find the longest palindromic substring",
+  "Implement a binary search algorithm",
+  "Create a function to detect a cycle in a directed graph",
+  "Implement the quicksort algorithm",
+  "Write a function to find the kth largest element in an unsorted array",
+  "Implement a trie data structure",
+  "Create a function to solve the N-Queens problem",
+  "Implement the Dijkstra's algorithm for finding shortest paths",
+  "Write a function to perform matrix multiplication"
+]
 
 const Footer = () => {
+  const [email, setEmail] = useState('')
+  const [dailyChallenge, setDailyChallenge] = useState('')
+
+  useEffect(() => {
+    const randomIndex = Math.floor(Math.random() * algorithmChallenges.length)
+    setDailyChallenge(algorithmChallenges[randomIndex])
+  }, [])
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault()
+    // Handle newsletter signup logic here
+    console.log('Signed up with:', email)
+    setEmail('')
+  }
+
+  const scrollToTop = () => {
+    window.scrollTo({ top: 0, behavior: 'smooth' })
+  }
+
   return (
     <footer className="bg-white border-t border-gray-200 py-12">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
@@ -21,9 +63,9 @@ const Footer = () => {
               </a>
             </div>
           </div>
-          <div>
+          <div className="grid grid-cols-2 gap-4">
             <h4 className="text-lg font-semibold mb-4 text-gray-900">Quick Links</h4>
-            <ul className="space-y-2">
+            <ul className="space-y-2 col-span-2">
               <li><Link href="/data-structures" className="text-gray-600 hover:text-blue-600 transition-colors">Data Structures</Link></li>
               <li><Link href="/sorting" className="text-gray-600 hover:text-blue-600 transition-colors">Sorting Algorithms</Link></li>
               <li><Link href="/searching" className="text-gray-600 hover:text-blue-600 transition-colors">Searching Algorithms</Link></li>
@@ -35,44 +77,40 @@ const Footer = () => {
           <div>
             <h4 className="text-lg font-semibold mb-4 text-gray-900">Resources</h4>
             <ul className="space-y-2">
-              <li><Link href="/tutorials" className="text-gray-600 hover:text-blue-600 transition-colors">Tutorials</Link></li>
-              <li><Link href="/blog" className="text-gray-600 hover:text-blue-600 transition-colors">Blog</Link></li>
-              <li><Link href="/faq" className="text-gray-600 hover:text-blue-600 transition-colors">FAQ</Link></li>
-              <li><Link href="/api-documentation" className="text-gray-600 hover:text-blue-600 transition-colors">API Documentation</Link></li>
-              <li><Link href="/community" className="text-gray-600 hover:text-blue-600 transition-colors">Community Forum</Link></li>
-              <li><Link href="/changelog" className="text-gray-600 hover:text-blue-600 transition-colors">Changelog</Link></li>
+              <li><Link href="/about" className="text-gray-600 hover:text-blue-600 transition-colors">Documentation</Link></li>
+              <li><Link href="/about" className="text-gray-600 hover:text-blue-600 transition-colors">Tutorials</Link></li>
+              <li><Link href="/about" className="text-gray-600 hover:text-blue-600 transition-colors">Blog</Link></li>
+              <li><Link href="/about" className="text-gray-600 hover:text-blue-600 transition-colors">FAQ</Link></li>
             </ul>
           </div>
           <div>
-            <h4 className="text-lg font-semibold mb-4 text-gray-900">Contact Us</h4>
-            <ul className="space-y-2">
-              <li className="flex items-center text-gray-600">
-                <Mail size={16} className="mr-2" />
-                <a href="mailto:info@datahub.com" className="hover:text-blue-600 transition-colors">info@datahub.com</a>
-              </li>
-              <li className="flex items-center text-gray-600">
-                <Phone size={16} className="mr-2" />
-                <a href="tel:+1234567890" className="hover:text-blue-600 transition-colors">+1 (234) 567-890</a>
-              </li>
-              <li className="flex items-center text-gray-600">
-                <MapPin size={16} className="mr-2" />
-                <span>123 Algorithm Street, Data City, 12345</span>
-              </li>
-            </ul>
-            <div className="mt-4">
-              <Link href="/contact" className="inline-block bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 text-white px-4 py-2 rounded-md text-sm font-medium hover:from-teal-100 hover:to-cyan-100 transition-all">
-                Get in Touch
-              </Link>
-            </div>
+            <h4 className="text-lg font-semibold mb-4 text-gray-900">Stay Updated</h4>
+            <form onSubmit={handleSubmit} className="space-y-2">
+              <Input
+                type="email"
+                placeholder="Enter your email"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+                className="w-full"
+              />
+              <Button type="submit" className="w-full bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 text-white">
+                Subscribe
+              </Button>
+            </form>
           </div>
         </div>
-        <div className="mt-12 pt-8 border-t border-gray-200">
-          <div className="flex flex-wrap justify-between items-center">
-            <p className="text-gray-600 text-sm">&copy; 2023 DataHub. All rights reserved.</p>
-            <div className="flex space-x-4 mt-4 sm:mt-0">
-              <Link href="/privacy-policy" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">Privacy Policy</Link>
-              <Link href="/terms-of-service" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">Terms of Service</Link>
-              <Link href="/sitemap" className="text-gray-600 hover:text-blue-600 text-sm transition-colors">Sitemap</Link>
+        <div className="mt-8 pt-8 border-t border-gray-200">
+          <div className="flex flex-col md:flex-row justify-between items-center">
+            <p className="text-gray-600 text-sm mb-4 md:mb-0">&copy; 2025 DataHub. All rights reserved.</p>
+            <div className="flex items-center space-x-4">
+              <Button
+                onClick={scrollToTop}
+                className="bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 transition-colors"
+              >
+                <ArrowUp size={16} className="mr-2" />
+                Back to Top
+              </Button>
             </div>
           </div>
         </div>
@@ -82,3 +120,4 @@ const Footer = () => {
 }
 
 export default Footer
+

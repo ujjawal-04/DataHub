@@ -55,7 +55,7 @@ export default function Home() {
   return (
     <div className="bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 text-gray-900 overflow-hidden">
       <motion.section 
-        className="relative py-24 px-4 bg-gradient-to-r from-teal-600 via-emerald-600 to-cyan-500"
+        className="relative py-24 px-4 bg-gradient-to-r from-teal-500 via-emerald-800 to-cyan-950"
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5 }}
@@ -65,10 +65,10 @@ export default function Home() {
             className="text-5xl md:text-7xl font-extrabold mb-6 text-white"
             {...fadeInUp}
           >
-            Welcome to DataHub
+            Welcome to <span className=" bg-clip-text text-transparent bg-gradient-to-r from-teal-400 via-emerald-400 to-cyan-400">DataHub</span>
           </motion.h1>
           <motion.p 
-            className="text-xl md:text-2xl mb-10 text-cyan-100"
+            className="text-xl md:text-2xl mb-12 text-cyan-100"
             {...fadeInUp}
             transition={{ delay: 0.2, ...fadeInUp.transition }}
           >

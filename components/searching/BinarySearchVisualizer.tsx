@@ -133,40 +133,40 @@ export default function BinarySearchVisualizer() {
   }
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <div className="mb-6 flex justify-center space-x-4">
+    <div className="p-4 sm:p-8 max-w-4xl mx-auto">
+      <div className="mb-6 flex flex-wrap justify-center gap-2 sm:gap-4">
         <button
           onClick={resetDefaultArray}
           disabled={searching}
-          className="bg-blue-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-blue-600 disabled:opacity-50 transition-colors"
+          className="bg-blue-500 text-white py-2 px-4 sm:px-6 rounded-md shadow-lg hover:bg-blue-600 disabled:opacity-50 transition-colors w-full sm:w-auto text-sm sm:text-base"
         >
           Reset Default Array
         </button>
         <button
           onClick={binarySearch}
           disabled={searching}
-          className="bg-green-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-green-600 disabled:opacity-50 transition-colors"
+          className="bg-green-500 text-white py-2 px-4 sm:px-6 rounded-md shadow-lg hover:bg-green-600 disabled:opacity-50 transition-colors w-full sm:w-auto text-sm sm:text-base"
         >
           Start Search
         </button>
         <button
           onClick={switchToDefaultArray}
           disabled={searching || usingDefaultArray}
-          className="bg-yellow-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+          className="bg-yellow-500 text-white py-2 px-4 sm:px-6 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors w-full sm:w-auto text-sm sm:text-base"
         >
           Use Default Array
         </button>
       </div>
 
       <div className="mb-4">
-        <p className="text-center text-xl font-semibold mb-2">Enter Custom Array and Target</p>
-        <div className="flex justify-center space-x-4">
+        <p className="text-center text-lg sm:text-xl font-semibold mb-2">Enter Custom Array and Target</p>
+        <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
           <input
             type="text"
             placeholder="Enter sorted array (comma-separated)"
             value={inputArray}
             onChange={handleInputArrayChange}
-            className="p-2 border rounded-md flex-grow"
+            className="p-2 border rounded-md flex-grow text-sm sm:text-base"
             aria-label="Enter array"
           />
           <input
@@ -174,20 +174,20 @@ export default function BinarySearchVisualizer() {
             placeholder="Enter target"
             value={inputTarget}
             onChange={handleInputTargetChange}
-            className="p-2 border rounded-md w-24"
+            className="p-2 border rounded-md w-full sm:w-24 text-sm sm:text-base"
             aria-label="Enter target"
           />
           <button
             onClick={startSearchWithInput}
-            className="bg-purple-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-purple-600 transition-colors"
+            className="bg-purple-500 text-white py-2 px-4 sm:px-6 rounded-md shadow-lg hover:bg-purple-600 transition-colors w-full sm:w-auto text-sm sm:text-base"
           >
             Search Custom
           </button>
         </div>
       </div>
 
-      <p className="mb-4 text-center text-xl font-semibold">Target: {target}</p>
-      <p className="mb-4 text-center text-lg font-semibold">
+      <p className="mb-2 text-center text-lg sm:text-xl font-semibold">Target: {target}</p>
+      <p className="mb-4 text-center text-base sm:text-lg font-semibold">
         {usingDefaultArray ? "Using Default Array" : "Using Custom Array"}
       </p>
 
@@ -195,7 +195,7 @@ export default function BinarySearchVisualizer() {
         {currentArray.map((value, idx) => (
           <motion.div
             key={idx}
-            className={`w-12 h-12 flex items-center justify-center m-1 rounded-md text-white font-bold ${
+            className={`w-8 h-8 sm:w-12 sm:h-12 flex items-center justify-center m-1 rounded-md text-white font-bold text-xs sm:text-base ${
               idx === mid
                 ? found
                   ? 'bg-green-500' // Mid element when target is found
@@ -213,15 +213,15 @@ export default function BinarySearchVisualizer() {
         ))}
       </div>
 
-      <div className="mt-4 text-center text-xl font-semibold mb-6">
+      <div className="mt-4 text-center text-lg sm:text-xl font-semibold mb-6">
         {found && <p className="text-green-500">Target found!</p>}
         {!found && !searching && mid !== 0 && <p className="text-red-500">Target not found.</p>}
         {searching && <p className="text-blue-500">Searching...</p>}
       </div>
 
       <div className="border rounded-md p-4 bg-gray-50">
-        <h2 className="text-2xl font-bold mb-4">Search Steps</h2>
-        <ul className="list-disc list-inside">
+        <h2 className="text-xl sm:text-2xl font-bold mb-4">Search Steps</h2>
+        <ul className="list-disc list-inside text-sm sm:text-base">
           {steps.map((step, index) => (
             <motion.li
               key={index}

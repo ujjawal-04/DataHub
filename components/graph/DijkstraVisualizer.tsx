@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect,useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 
 type Node = {
@@ -173,66 +173,66 @@ export default function DijkstraVisualizer() {
   }, [isRunning, autoPlay])
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <div className="mb-6 flex justify-center space-x-4">
+    <div className="p-4 sm:p-8 max-w-4xl mx-auto">
+      <div className="mb-6 flex flex-wrap justify-center gap-2">
         <select
           value={startNode}
           onChange={(e) => setStartNode(parseInt(e.target.value))}
-          className="p-2 border rounded-md"
+          className="p-2 border rounded-md text-sm sm:text-base"
         >
           {graph.nodes.map((node) => (
             <option key={node.id} value={node.id}>
-              Node {node.id}
+              Start: Node {node.id}
             </option>
           ))}
         </select>
         <select
           value={endNode}
           onChange={(e) => setEndNode(parseInt(e.target.value))}
-          className="p-2 border rounded-md"
+          className="p-2 border rounded-md text-sm sm:text-base"
         >
           {graph.nodes.map((node) => (
             <option key={node.id} value={node.id}>
-              Node {node.id}
+              End: Node {node.id}
             </option>
           ))}
         </select>
         <button
           onClick={runDijkstra}
           disabled={isRunning}
-          className="bg-blue-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-blue-600 disabled:opacity-50 transition-colors"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-blue-600 disabled:opacity-50 transition-colors text-sm sm:text-base"
         >
           Run Dijkstra
         </button>
         <button
           onClick={() => setIsRunning(!isRunning)}
-          className="bg-green-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-green-600 transition-colors"
+          className="bg-green-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-green-600 transition-colors text-sm sm:text-base"
         >
           {isRunning ? 'Pause' : 'Play'}
         </button>
         <button
           onClick={stepBackward}
           disabled={currentStep === 0}
-          className="bg-yellow-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+          className="bg-yellow-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors text-sm sm:text-base"
         >
           Step Back
         </button>
         <button
           onClick={stepForward}
           disabled={currentStep === steps.length - 1}
-          className="bg-yellow-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+          className="bg-yellow-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors text-sm sm:text-base"
         >
           Step Forward
         </button>
         <button
           onClick={resetVisualization}
-          className="bg-red-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-red-600 transition-colors"
+          className="bg-red-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-red-600 transition-colors text-sm sm:text-base"
         >
           Reset
         </button>
       </div>
 
-      <div className="mb-8">
+      <div className="mb-8 overflow-x-auto">
         <svg width="400" height="250" className="mx-auto">
           {graph.edges.map((edge, index) => {
             const fromNode = graph.nodes.find((n) => n.id === edge.from)!
@@ -305,19 +305,19 @@ export default function DijkstraVisualizer() {
       </div>
 
       <div className="mb-4">
-        <h2 className="text-xl font-bold mb-2">Current Step</h2>
+        <h2 className="text-lg sm:text-xl font-bold mb-2">Current Step</h2>
         <div className="bg-gray-100 p-4 rounded-md">
-          <p>{steps[currentStep]?.description || 'No steps yet'}</p>
+          <p className="text-sm sm:text-base">{steps[currentStep]?.description || 'No steps yet'}</p>
         </div>
       </div>
 
       <div className="mb-4">
-        <h2 className="text-xl font-bold mb-2">Distances</h2>
+        <h2 className="text-lg sm:text-xl font-bold mb-2">Distances</h2>
         <div className="flex flex-wrap gap-2">
           {Object.entries(steps[currentStep]?.distances || {}).map(([node, distance]) => (
             <div
               key={node}
-              className="bg-blue-500 text-white px-3 py-1 rounded-full"
+              className="bg-blue-500 text-white px-2 py-1 rounded-full text-xs sm:text-sm"
             >
               Node {node}: {distance === Infinity ? '∞' : distance}
             </div>
@@ -326,12 +326,12 @@ export default function DijkstraVisualizer() {
       </div>
 
       <div>
-        <h2 className="text-xl font-bold mb-2">Shortest Path</h2>
-        <div className="flex space-x-2">
+        <h2 className="text-lg sm:text-xl font-bold mb-2">Shortest Path</h2>
+        <div className="flex flex-wrap gap-2">
           {steps[currentStep]?.path.map((nodeId) => (
             <div
               key={nodeId}
-              className="bg-pink-500 text-white w-8 h-8 flex items-center justify-center rounded-full"
+              className="bg-pink-500 text-white w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xs sm:text-sm"
             >
               {nodeId}
             </div>

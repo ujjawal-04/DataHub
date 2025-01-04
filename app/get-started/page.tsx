@@ -4,6 +4,7 @@ import { useState } from 'react'
 import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ArrowRight, BarChart2, Search, Share2, Database, GitBranch, Scissors } from 'lucide-react'
+import BackButton from '@/components/BackButton'
 
 const features = [
   {
@@ -50,6 +51,7 @@ export default function GetStartedPage() {
   return (
     <div className="min-h-screen bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 ml-10 mr-10">
       <div className="container mx-auto px-4 py-16 max-w-6xl">
+        <BackButton/>
         <motion.h1 
           className="text-4xl md:text-5xl font-bold mb-8 text-transparent bg-clip-text bg-gradient-to-r from-teal-500 via-emerald-500 to-cyan-500 text-center"
           initial={{ opacity: 0, y: -20 }}

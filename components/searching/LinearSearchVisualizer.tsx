@@ -130,26 +130,26 @@ export default function LinearSearchVisualizer() {
   }
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <div className="mb-6 flex justify-center space-x-4">
+    <div className="p-4 sm:p-8 max-w-4xl mx-auto">
+      <div className="mb-6 flex flex-wrap justify-center gap-4">
         <button 
           onClick={resetDefaultArray} 
           disabled={searching} 
-          className="bg-blue-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-blue-600 disabled:opacity-50 transition-colors"
+          className="bg-blue-500 text-white py-2 px-4 sm:px-6 rounded-md shadow-lg hover:bg-blue-600 disabled:opacity-50 transition-colors w-full sm:w-auto"
         >
           Reset Default Array
         </button>
         <button 
           onClick={linearSearch} 
           disabled={searching} 
-          className="bg-green-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-green-600 disabled:opacity-50 transition-colors"
+          className="bg-green-500 text-white py-2 px-4 sm:px-6 rounded-md shadow-lg hover:bg-green-600 disabled:opacity-50 transition-colors w-full sm:w-auto"
         >
           Start Search
         </button>
         <button 
           onClick={switchToDefaultArray} 
           disabled={searching || usingDefaultArray} 
-          className="bg-yellow-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+          className="bg-yellow-500 text-white py-2 px-4 sm:px-6 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors w-full sm:w-auto"
         >
           Use Default Array
         </button>
@@ -157,7 +157,7 @@ export default function LinearSearchVisualizer() {
 
       <div className="mb-4">
         <p className="text-center text-xl font-semibold mb-2">Enter Custom Array and Target</p>
-        <div className="flex justify-center space-x-4">
+        <div className="flex flex-col sm:flex-row justify-center space-y-2 sm:space-y-0 sm:space-x-4">
           <input
             type="text"
             placeholder="Enter array (comma-separated)"
@@ -171,12 +171,12 @@ export default function LinearSearchVisualizer() {
             placeholder="Enter target"
             value={inputTarget}
             onChange={handleInputTargetChange}
-            className="p-2 border rounded-md w-24"
+            className="p-2 border rounded-md w-full sm:w-24"
             aria-label="Enter target"
           />
           <button
             onClick={startSearchWithInput}
-            className="bg-purple-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-purple-600 transition-colors"
+            className="bg-purple-500 text-white py-2 px-4 sm:px-6 rounded-md shadow-lg hover:bg-purple-600 transition-colors w-full sm:w-auto"
           >
             Search Custom
           </button>
@@ -192,7 +192,7 @@ export default function LinearSearchVisualizer() {
         {currentArray.map((value, idx) => (
           <motion.div
             key={idx}
-            className={`w-12 h-12 flex items-center justify-center m-1 rounded-md text-white font-bold ${
+            className={`w-10 h-10 sm:w-12 sm:h-12 flex items-center justify-center m-1 rounded-md text-white font-bold ${
               idx === currentIndex
                 ? found
                   ? 'bg-green-500' // Highlight target in green when found
@@ -223,7 +223,7 @@ export default function LinearSearchVisualizer() {
               initial={{ opacity: 0, x: -20 }}
               animate={{ opacity: 1, x: 0 }}
               transition={{ duration: 0.5, delay: index * 0.1 }}
-              className="mb-2"
+              className="mb-2 text-sm sm:text-base"
             >
               {step}
             </motion.li>

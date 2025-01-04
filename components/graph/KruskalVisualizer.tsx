@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect,useCallback } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 
 type Node = {
@@ -159,44 +159,44 @@ export default function KruskalVisualizer() {
   }, [isRunning, autoPlay])
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-      <div className="mb-6 flex justify-center space-x-4">
+    <div className="p-4 sm:p-8 max-w-4xl mx-auto">
+      <div className="mb-6 flex flex-wrap justify-center gap-2">
         <button
           onClick={runKruskal}
           disabled={isRunning}
-          className="bg-blue-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-blue-600 disabled:opacity-50 transition-colors"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-blue-600 disabled:opacity-50 transition-colors text-sm sm:text-base"
         >
           Run Kruskal
         </button>
         <button
           onClick={() => setIsRunning(!isRunning)}
-          className="bg-green-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-green-600 transition-colors"
+          className="bg-green-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-green-600 transition-colors text-sm sm:text-base"
         >
           {isRunning ? 'Pause' : 'Play'}
         </button>
         <button
           onClick={stepBackward}
           disabled={currentStep === 0}
-          className="bg-yellow-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+          className="bg-yellow-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors text-sm sm:text-base"
         >
           Step Back
         </button>
         <button
           onClick={stepForward}
           disabled={currentStep === steps.length - 1}
-          className="bg-yellow-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+          className="bg-yellow-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors text-sm sm:text-base"
         >
           Step Forward
         </button>
         <button
           onClick={resetVisualization}
-          className="bg-red-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-red-600 transition-colors"
+          className="bg-red-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-red-600 transition-colors text-sm sm:text-base"
         >
           Reset
         </button>
       </div>
 
-      <div className="mb-8">
+      <div className="mb-8 overflow-x-auto">
         <svg width="400" height="250" className="mx-auto">
           {graph.edges.map((edge, index) => {
             const fromNode = graph.nodes.find((n) => n.id === edge.from)!
@@ -238,7 +238,7 @@ export default function KruskalVisualizer() {
                 stroke="#000"
                 strokeWidth="2"
                 initial={{ scale: 1 }}
-                animate={{ scale: 1.2 }}
+                animate={{ scale: isVisited ? 1.2 : 1 }}
                 transition={{ duration: 0.3 }}
               >
                 <title>Node {node.id}</title>
@@ -262,11 +262,26 @@ export default function KruskalVisualizer() {
       </div>
 
       <div className="mb-4">
-        <h2 className="text-xl font-bold mb-2">Current Step</h2>
+        <h2 className="text-lg sm:text-xl font-bold mb-2">Current Step</h2>
         <div className="bg-gray-100 p-4 rounded-md">
-          <p>{steps[currentStep]?.description || 'No steps yet'}</p>
+          <p className="text-sm sm:text-base">{steps[currentStep]?.description || 'No steps yet'}</p>
+        </div>
+      </div>
+
+      <div className="mb-4">
+        <h2 className="text-lg sm:text-xl font-bold mb-2">Minimum Spanning Tree Edges</h2>
+        <div className="flex flex-wrap gap-2">
+          {steps[currentStep]?.mstEdges.map((edge, index) => (
+            <div
+              key={index}
+              className="bg-green-500 text-white px-2 py-1 rounded-full text-xs sm:text-sm"
+            >
+              {edge.from} - {edge.to} ({edge.weight})
+            </div>
+          ))}
         </div>
       </div>
     </div>
   )
 }
+

@@ -1,6 +1,6 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 
 type Node = {
@@ -62,14 +62,12 @@ export default function DFSVisualizer() {
     setHasMounted(true)
   }, [])
 
-  // Reset visualization
   const resetVisualization = () => {
     setSteps([])
     setCurrentStep(0)
     setIsRunning(false)
   }
 
-  // Add a new node
   const addNode = () => {
     const newNode = { id: newNodeId, x: Math.random() * 350, y: Math.random() * 200 }
     setGraph((prevGraph) => ({
@@ -79,7 +77,6 @@ export default function DFSVisualizer() {
     setNewNodeId(newNodeId + 1)
   }
 
-  // Add a new edge
   const addEdge = () => {
     if (newEdgeFrom && newEdgeTo && newEdgeFrom !== newEdgeTo) {
       setGraph((prevGraph) => ({
@@ -91,7 +88,6 @@ export default function DFSVisualizer() {
     setNewEdgeTo('')
   }
 
-  // Select start node
   const handleStartNodeChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     setStartNode(parseInt(e.target.value))
     resetVisualization()
@@ -101,7 +97,6 @@ export default function DFSVisualizer() {
     resetVisualization()
   }, [startNode])
 
-  // Run DFS algorithm
   const runDFS = () => {
     setIsRunning(true)
     const newSteps: Step[] = []
@@ -130,7 +125,7 @@ export default function DFSVisualizer() {
           .filter((e) => e.from === current && !visited.includes(e.to))
           .map((e) => e.to)
 
-        stack.push(...neighbors.reverse()) // Push neighbors in reverse order to maintain correct DFS order
+        stack.push(...neighbors)
 
         if (neighbors.length > 0) {
           newSteps.push({
@@ -146,7 +141,6 @@ export default function DFSVisualizer() {
     setSteps(newSteps)
   }
 
-  // Step forward in DFS process
   const stepForward = () => {
     if (currentStep < steps.length - 1) {
       setCurrentStep(currentStep + 1)
@@ -155,91 +149,86 @@ export default function DFSVisualizer() {
     }
   }
 
-  // Step backward in DFS process
   const stepBackward = () => {
     if (currentStep > 0) {
       setCurrentStep(currentStep - 1)
     }
   }
 
-  // Auto-play DFS steps
-  useEffect(() => {
-    const autoPlay = async () => {
-      for (let i = currentStep; i < steps.length; i++) {
-        if (!isRunning) break
-        setCurrentStep(i)
-        await new Promise((resolve) => setTimeout(resolve, 1000))
-      }
-      setIsRunning(false)
+  const autoPlay = useCallback(async () => {
+    for (let i = currentStep; i < steps.length; i++) {
+      if (!isRunning) break
+      setCurrentStep(i)
+      await new Promise((resolve) => setTimeout(resolve, 1000))
     }
+    setIsRunning(false)
+  }, [currentStep, steps.length, isRunning])
 
+  useEffect(() => {
     if (isRunning) {
       autoPlay()
     }
-  }, [isRunning, currentStep, steps])  // Ensure the dependencies are correct
+  }, [isRunning, autoPlay])
 
   if (!hasMounted) {
     return null
   }
 
   return (
-    <div className="p-8 max-w-4xl mx-auto">
-
-      {/* User Inputs for Graph (Nodes and Edges) */}
+    <div className="p-4 sm:p-8 max-w-4xl mx-auto">
       <div className="mb-6 flex flex-col items-center space-y-4">
-        <div className="flex space-x-4">
+        <div className="flex flex-wrap justify-center gap-2">
           <button
             onClick={addNode}
-            className="bg-blue-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-blue-600 transition-colors"
+            className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-blue-600 transition-colors text-sm sm:text-base"
           >
             Add Node
           </button>
           <button
             onClick={addEdge}
-            className="bg-green-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-green-600 transition-colors"
+            className="bg-green-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-green-600 transition-colors text-sm sm:text-base"
           >
             Add Edge
           </button>
         </div>
 
-        <div className="flex space-x-4">
+        <div className="flex flex-wrap justify-center gap-2">
           <div>
-            <label className="text-lg">New Node ID</label>
+            <label className="text-sm sm:text-base">New Node ID</label>
             <input
               type="number"
               value={newNodeId}
               disabled
-              className="mt-2 p-2 border rounded-md"
+              className="mt-1 p-2 border rounded-md w-full"
             />
           </div>
           <div>
-            <label className="text-lg">Edge From</label>
+            <label className="text-sm sm:text-base">Edge From</label>
             <input
               type="number"
               value={newEdgeFrom}
               onChange={(e) => setNewEdgeFrom(e.target.value)}
-              className="mt-2 p-2 border rounded-md"
+              className="mt-1 p-2 border rounded-md w-full"
             />
           </div>
           <div>
-            <label className="text-lg">Edge To</label>
+            <label className="text-sm sm:text-base">Edge To</label>
             <input
               type="number"
               value={newEdgeTo}
               onChange={(e) => setNewEdgeTo(e.target.value)}
-              className="mt-2 p-2 border rounded-md"
+              className="mt-1 p-2 border rounded-md w-full"
             />
           </div>
         </div>
       </div>
 
-      {/* Start Node Selection */}
       <div className="mb-6">
-        <label className="text-lg">Select Start Node</label>
+        <label className="text-sm sm:text-base">Select Start Node</label>
         <select
           value={startNode}
           onChange={handleStartNodeChange}
-          className="p-2 border rounded-md mt-2"
+          className="p-2 border rounded-md mt-2 w-full"
         >
           {graph.nodes.map((node) => (
             <option key={node.id} value={node.id}>
@@ -249,45 +238,43 @@ export default function DFSVisualizer() {
         </select>
       </div>
 
-      {/* Buttons for DFS */}
-      <div className="mb-6 flex justify-center space-x-4">
+      <div className="mb-6 flex flex-wrap justify-center gap-2">
         <button
           onClick={runDFS}
           disabled={isRunning}
-          className="bg-blue-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-blue-600 disabled:opacity-50 transition-colors"
+          className="bg-blue-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-blue-600 disabled:opacity-50 transition-colors text-sm sm:text-base"
         >
           Run DFS
         </button>
         <button
           onClick={() => setIsRunning(!isRunning)}
-          className="bg-green-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-green-600 transition-colors"
+          className="bg-green-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-green-600 transition-colors text-sm sm:text-base"
         >
           {isRunning ? 'Pause' : 'Play'}
         </button>
         <button
           onClick={stepBackward}
           disabled={currentStep === 0}
-          className="bg-yellow-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+          className="bg-yellow-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors text-sm sm:text-base"
         >
           Step Back
         </button>
         <button
           onClick={stepForward}
           disabled={currentStep === steps.length - 1}
-          className="bg-yellow-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors"
+          className="bg-yellow-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-yellow-600 disabled:opacity-50 transition-colors text-sm sm:text-base"
         >
           Step Forward
         </button>
         <button
           onClick={resetVisualization}
-          className="bg-red-500 text-white py-2 px-6 rounded-md shadow-lg hover:bg-red-600 transition-colors"
+          className="bg-red-500 text-white py-2 px-4 rounded-md shadow-lg hover:bg-red-600 transition-colors text-sm sm:text-base"
         >
           Reset
         </button>
       </div>
 
-      {/* Graph Visualization */}
-      <div className="mb-8">
+      <div className="mb-8 overflow-x-auto">
         <svg width="400" height="250" className="mx-auto">
           {graph.edges.map((edge, index) => {
             const fromNode = graph.nodes.find((n) => n.id === edge.from)!
@@ -348,22 +335,20 @@ export default function DFSVisualizer() {
         </svg>
       </div>
 
-      {/* Step Description */}
       <div className="mb-4">
-        <h2 className="text-xl font-bold mb-2">Current Step</h2>
+        <h2 className="text-lg sm:text-xl font-bold mb-2">Current Step</h2>
         <div className="bg-gray-100 p-4 rounded-md">
-          <p>{steps[currentStep]?.description || 'No steps yet'}</p>
+          <p className="text-sm sm:text-base">{steps[currentStep]?.description || 'No steps yet'}</p>
         </div>
       </div>
 
-      {/* Stack */}
       <div className="mb-4">
-        <h2 className="text-xl font-bold mb-2">Stack</h2>
-        <div className="flex space-x-2">
+        <h2 className="text-lg sm:text-xl font-bold mb-2">Stack</h2>
+        <div className="flex flex-wrap gap-2">
           {steps[currentStep]?.stack.map((nodeId) => (
             <div
               key={nodeId}
-              className="bg-blue-500 text-white w-8 h-8 flex items-center justify-center rounded-full"
+              className="bg-blue-500 text-white w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xs sm:text-sm"
             >
               {nodeId}
             </div>
@@ -371,14 +356,13 @@ export default function DFSVisualizer() {
         </div>
       </div>
 
-      {/* Visited Nodes */}
       <div>
-        <h2 className="text-xl font-bold mb-2">Visited Nodes</h2>
-        <div className="flex space-x-2">
+        <h2 className="text-lg sm:text-xl font-bold mb-2">Visited Nodes</h2>
+        <div className="flex flex-wrap gap-2">
           {steps[currentStep]?.visited.map((nodeId) => (
             <div
               key={nodeId}
-              className="bg-green-500 text-white w-8 h-8 flex items-center justify-center rounded-full"
+              className="bg-green-500 text-white w-6 h-6 sm:w-8 sm:h-8 flex items-center justify-center rounded-full text-xs sm:text-sm"
             >
               {nodeId}
             </div>
@@ -388,3 +372,4 @@ export default function DFSVisualizer() {
     </div>
   )
 }
+

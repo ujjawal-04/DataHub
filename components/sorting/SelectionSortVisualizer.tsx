@@ -68,7 +68,7 @@ export default function SelectionSortVisualizer() {
       {/* Same structure for UI controls as in Bubble Sort */}
       <div className="mb-4">
         <button onClick={resetArray} disabled={sorting} className="bg-blue-200 text-blue-800 hover:bg-blue-300 px-4 py-2 rounded-lg transition-all">Reset Array</button>
-        <button onClick={selectionSort} disabled={sorting} className="bg-green-600 text-white hover:bg-green-500 px-4 py-2 rounded-lg transition-all ml-2">Sort</button>
+        <button onClick={selectionSort} disabled={sorting} className="bg-green-600 text-white hover:bg-green-500 px-4 py-2 rounded-lg transition-all ml-2">Sort with Selection Sort</button>
       </div>
       {/* Input for custom array values */}
       <div className="flex mb-4">

@@ -1,8 +1,12 @@
+'use client'
+
 import React, { useState, useEffect, useCallback } from 'react'
 import { motion } from 'framer-motion'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table"
+import { ScrollArea } from "@/components/ui/scroll-area"
+import { Card, CardContent } from "@/components/ui/card"
 
 interface Matrix {
   rows: number;
@@ -46,7 +50,6 @@ const MatrixChain: React.FC = () => {
   };
 
   const matrixChainOrder = useCallback(() => {
-    // Move printOptimalParens function inside the callback to avoid the warning
     const printOptimalParens = (s: number[][], i: number, j: number): string => {
       if (i === j) {
         return `A${i + 1}`;
@@ -107,7 +110,7 @@ const MatrixChain: React.FC = () => {
       initial={{ opacity: 0 }}
       animate={{ opacity: 1 }}
       transition={{ duration: 0.5 }}
-      className="max-w-4xl mx-auto p-6 text-blue-800"
+      className="w-full max-w-4xl mx-auto p-2 sm:p-6 text-blue-800"
     >
       <motion.div 
         variants={containerVariants}
@@ -116,86 +119,96 @@ const MatrixChain: React.FC = () => {
         className="mb-6"
       >
         <h2 className="text-xl font-semibold mb-2">Matrices</h2>
-        <Table>
-          <TableHeader>
-            <TableRow>
-              <TableHead>Matrix</TableHead>
-              <TableHead>Rows</TableHead>
-              <TableHead>Columns</TableHead>
-              <TableHead>Action</TableHead>
-            </TableRow>
-          </TableHeader>
-          <TableBody>
-            {matrices.map((matrix, index) => (
-              <TableRow key={index}>
-                <TableCell>A{index + 1}</TableCell><TableCell>A{index + 1}</TableCell>
-                <TableCell>
-                  <Input
-                    type="number"
-                    value={matrix.rows}
-                    onChange={(e) => updateMatrix(index, 'rows', e.target.value)}
-                    min={1}
-                    disabled={index > 0}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Input
-                    type="number"
-                    value={matrix.cols}
-                    onChange={(e) => updateMatrix(index, 'cols', e.target.value)}
-                    min={1}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Button onClick={() => removeMatrix(index)} variant="destructive" disabled={matrices.length <= 2}>Remove</Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
-        </Table>
-        <Button onClick={addMatrix} className="mt-2 bg-blue-600 hover:bg-blue-700 text-white">Add Matrix</Button>
-      </motion.div>
-
-      <motion.div variants={containerVariants} className="mb-6">
-        <h2 className="text-xl font-semibold mb-2">Dynamic Programming Table</h2>
-        <div className="overflow-x-auto">
+        <ScrollArea className="w-full">
           <Table>
             <TableHeader>
               <TableRow>
-                <TableHead>i\j</TableHead>
-                {matrices.map((_, index) => (
-                  <TableHead key={index}>{index + 1}</TableHead>
-                ))}
+                <TableHead>Matrix</TableHead>
+                <TableHead>Rows</TableHead>
+                <TableHead>Columns</TableHead>
+                <TableHead>Action</TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
-              {dpTable.map((row, i) => (
-                <TableRow key={i}>
-                  <TableCell>{i + 1}</TableCell>
-                  {row.map((cell, j) => (
-                    <TableCell key={j}>
-                      {cell === Infinity ? '∞' : cell}
-                    </TableCell>
-                  ))}
+              {matrices.map((matrix, index) => (
+                <TableRow key={index}>
+                  <TableCell>A{index + 1}</TableCell>
+                  <TableCell>
+                    <Input
+                      type="number"
+                      value={matrix.rows}
+                      onChange={(e) => updateMatrix(index, 'rows', e.target.value)}
+                      min={1}
+                      disabled={index > 0}
+                      className="w-full"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Input
+                      type="number"
+                      value={matrix.cols}
+                      onChange={(e) => updateMatrix(index, 'cols', e.target.value)}
+                      min={1}
+                      className="w-full"
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Button onClick={() => removeMatrix(index)} variant="destructive" disabled={matrices.length <= 2} className="w-full sm:w-auto">Remove</Button>
+                  </TableCell>
                 </TableRow>
               ))}
             </TableBody>
           </Table>
-        </div>
+        </ScrollArea>
+        <Button onClick={addMatrix} className="mt-2 bg-blue-600 hover:bg-blue-700 text-white w-full sm:w-auto">Add Matrix</Button>
+      </motion.div>
+
+      <motion.div variants={containerVariants} className="mb-6">
+        <h2 className="text-xl font-semibold mb-2">Dynamic Programming Table</h2>
+        <Card>
+          <CardContent className="p-0">
+            <ScrollArea className="w-full overflow-auto">
+              <Table>
+                <TableHeader>
+                  <TableRow>
+                    <TableHead>i\j</TableHead>
+                    {matrices.map((_, index) => (
+                      <TableHead key={index}>{index + 1}</TableHead>
+                    ))}
+                  </TableRow>
+                </TableHeader>
+                <TableBody>
+                  {dpTable.map((row, i) => (
+                    <TableRow key={i}>
+                      <TableCell>{i + 1}</TableCell>
+                      {row.map((cell, j) => (
+                        <TableCell key={j}>
+                          {cell === Infinity ? '∞' : cell}
+                        </TableCell>
+                      ))}
+                    </TableRow>
+                  ))}
+                </TableBody>
+              </Table>
+            </ScrollArea>
+          </CardContent>
+        </Card>
       </motion.div>
 
       <motion.div variants={itemVariants} className="mb-6">
         <h2 className="text-xl font-semibold mb-2">Optimal Parenthesization</h2>
-        <p className="text-2xl font-mono bg-blue-100 p-4 rounded">
-          {optimalOrder}
-        </p>
+        <ScrollArea className="w-full max-h-24">
+          <p className="text-lg sm:text-2xl font-mono bg-blue-100 p-4 rounded whitespace-nowrap">
+            {optimalOrder}
+          </p>
+        </ScrollArea>
       </motion.div>
 
       <motion.div 
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
         transition={{ duration: 0.5, delay: 0.5 }}
-        className="bg-blue-50 p-4 rounded-lg"
+        className="bg-blue-50 p-4 rounded-lg text-sm sm:text-base"
       >
         <h2 className="text-xl font-semibold mb-2">How Matrix Chain Multiplication Works</h2>
         <ol className="list-decimal list-inside space-y-2">
@@ -220,3 +233,4 @@ const MatrixChain: React.FC = () => {
 }
 
 export default MatrixChain;
+

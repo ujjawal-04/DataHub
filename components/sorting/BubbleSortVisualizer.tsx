@@ -82,7 +82,7 @@ export default function BubbleSortVisualizer() {
           disabled={sorting}
           className="bg-green-600 text-white hover:bg-green-500 px-4 py-2 rounded-lg transition-all ml-2"
         >
-          Sort
+          Sort with Bubble Sort
         </button>
       </div>
 
