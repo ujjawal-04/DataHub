@@ -1,37 +1,15 @@
 "use client"
 
-import { useState, useEffect } from 'react'
+import { useState} from 'react'
 import Link from 'next/link'
-import { Github, Twitter, Linkedin, ArrowUp, Brain } from 'lucide-react'
+import { Github, Twitter, Linkedin, ArrowUp} from 'lucide-react'
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
-import {
-  Popover,
-  PopoverContent,
-  PopoverTrigger,
-} from "@/components/ui/popover"
 
-const algorithmChallenges = [
-  "Implement a function to reverse a linked list",
-  "Write a function to find the longest palindromic substring",
-  "Implement a binary search algorithm",
-  "Create a function to detect a cycle in a directed graph",
-  "Implement the quicksort algorithm",
-  "Write a function to find the kth largest element in an unsorted array",
-  "Implement a trie data structure",
-  "Create a function to solve the N-Queens problem",
-  "Implement the Dijkstra's algorithm for finding shortest paths",
-  "Write a function to perform matrix multiplication"
-]
 
 const Footer = () => {
   const [email, setEmail] = useState('')
-  const [dailyChallenge, setDailyChallenge] = useState('')
 
-  useEffect(() => {
-    const randomIndex = Math.floor(Math.random() * algorithmChallenges.length)
-    setDailyChallenge(algorithmChallenges[randomIndex])
-  }, [])
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
