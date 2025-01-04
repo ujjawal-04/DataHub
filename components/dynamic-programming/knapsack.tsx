@@ -68,11 +68,11 @@ const Knapsack: React.FC = () => {
       }
     }
     setSelectedItems(selected);
-  }, [items, capacity]);  // Add necessary dependencies here
+  }, [items, capacity]);
 
   useEffect(() => {
     solveKnapsack();
-  }, [solveKnapsack]);  // Add solveKnapsack as a dependency here
+  }, [solveKnapsack]);
 
   const containerVariants = {
     hidden: { opacity: 0 },
@@ -117,29 +117,34 @@ const Knapsack: React.FC = () => {
             </TableRow>
           </TableHeader>
           <TableBody>
-            {items.map((item, index) => (
-              <TableRow key={index}>
-                <TableCell>
-                  <Input
-                    type="number"
-                    value={item.weight}
-                    onChange={(e) => updateItem(index, 'weight', e.target.value)}
-                    min={0}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Input
-                    type="number"
-                    value={item.value}
-                    onChange={(e) => updateItem(index, 'value', e.target.value)}
-                    min={0}
-                  />
-                </TableCell>
-                <TableCell>
-                  <Button onClick={() => removeItem(index)} variant="destructive">Remove</Button>
-                </TableCell>
-              </TableRow>
-            ))}
+            {items.map((item, index) => {
+              // Ensure item exists before rendering
+              if (!item) return null;
+
+              return (
+                <TableRow key={index}>
+                  <TableCell>
+                    <Input
+                      type="number"
+                      value={item?.weight || ''}
+                      onChange={(e) => updateItem(index, 'weight', e.target.value)}
+                      min={0}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Input
+                      type="number"
+                      value={item?.value || ''}
+                      onChange={(e) => updateItem(index, 'value', e.target.value)}
+                      min={0}
+                    />
+                  </TableCell>
+                  <TableCell>
+                    <Button onClick={() => removeItem(index)} variant="destructive">Remove</Button>
+                  </TableCell>
+                </TableRow>
+              );
+            })}
           </TableBody>
         </Table>
         <Button onClick={addItem} className="mt-2 bg-blue-600 hover:bg-blue-700 text-white">Add Item</Button>
@@ -169,19 +174,24 @@ const Knapsack: React.FC = () => {
               </TableRow>
             </TableHeader>
             <TableBody>
-              {dpTable.map((row, i) => (
-                <TableRow key={i}>
-                  <TableCell>{i === 0 ? '0' : `${items[i-1].weight},${items[i-1].value}`}</TableCell>
-                  {row.map((cell, j) => (
-                    <TableCell 
-                      key={j}
-                      className={selectedItems[i-1] && j === capacity ? 'bg-green-200' : ''}
-                    >
-                      {cell}
-                    </TableCell>
-                  ))}
-                </TableRow>
-              ))}
+              {dpTable.map((row, i) => {
+                // Ensure row exists before rendering
+                if (!row) return null;
+
+                return (
+                  <TableRow key={i}>
+                    <TableCell>{i === 0 ? '0' : `${items[i-1]?.weight || 0},${items[i-1]?.value || 0}`}</TableCell>
+                    {row.map((cell, j) => (
+                      <TableCell 
+                        key={j}
+                        className={selectedItems[i-1] && j === capacity ? 'bg-green-200' : ''}
+                      >
+                        {cell}
+                      </TableCell>
+                    ))}
+                  </TableRow>
+                );
+              })}
             </TableBody>
           </Table>
         </div>
@@ -193,7 +203,7 @@ const Knapsack: React.FC = () => {
           Maximum Value: {maxValue}
         </p>
         <p className="mt-2">
-          Selected Items: {selectedItems.map((selected, index) => selected ? `${items[index].weight}` : '').filter(Boolean).join(', ')}
+          Selected Items: {selectedItems.map((selected, index) => selected ? `${items[index]?.weight || 0}` : '').filter(Boolean).join(', ')}
         </p>
       </motion.div>
 
@@ -224,7 +234,7 @@ const Knapsack: React.FC = () => {
         </p>
       </motion.div>
     </motion.div>
-  )
+  );
 }
 
-export default Knapsack
+export default Knapsack;
