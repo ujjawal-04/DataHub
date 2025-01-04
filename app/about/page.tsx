@@ -4,6 +4,7 @@ import Link from 'next/link'
 import { motion } from 'framer-motion'
 import { ChartBarIcon, CodeBracketIcon, ServerIcon, LightBulbIcon, RocketLaunchIcon, BookOpenIcon, UsersIcon } from '@heroicons/react/24/outline'
 import { ArrowRight } from 'lucide-react'
+import BackButton from '@/components/BackButton'
 
 const features = [
   {
@@ -50,6 +51,7 @@ export default function AboutPage() {
   return (
     <div className="bg-gradient-to-br from-teal-50 via-emerald-50 to-cyan-50 text-gray-900 ml-20 mr-20">
       <div className="container mx-auto px-4 py-16">
+        <BackButton/>
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
